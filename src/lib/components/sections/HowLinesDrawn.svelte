@@ -1,5 +1,5 @@
 <!-- Section 1 & 2: Geographic sorting + gerrymandering explainer -->
-<section class="section rigged">
+<section class="section how-lines-drawn">
   <div class="prose">
     <p class="section-label mono text-muted">"My vote doesn't matter."</p>
     <h2>How the Lines Got Drawn</h2>
@@ -9,7 +9,7 @@
       It's one of the most common reasons Americans give for not voting.
       And here's the uncomfortable truth: they're not entirely wrong.
       Not because their vote doesn't count — it does. But because of
-      <em>where they live</em>, the outcome was probably already decided
+      <em>where they live</em>, the outcome was probably already determined
       before they walked into a polling booth.
     </p>
     <div class="pull-quote">
@@ -17,7 +17,7 @@
         It's the equivalent of getting hired for a job and then rewriting
         the job description so your boss can't fire you. Except <em>we the
         people</em> are the boss — and we've been slowly, legally, quietly
-        shut out.
+        written out of the equation.
       </p>
     </div>
 
@@ -32,21 +32,22 @@
       the problem from scratch — it amplified one that was already happening.
       Cities got more liberal. Rural areas got more conservative. Not because
       of any grand plan, but because of jobs, cost of living, culture,
-      proximity to family. The sorting happened organically. Gerrymandering
+      proximity to family. The sorting happened on its own. Gerrymandering
       looked at that sorting and drew it into law. Choosing where to live
-      by choice? Great. Feeling locked into where you live? Not so great.
+      is a right. Feeling like that choice determines how much your vote
+      counts? That's the problem worth talking about.
     </p>
     <p>
       While social media has made it easier than ever to find your people,
       at the end of the day, it is still a business. Most Americans now live
-      somewhere their vote was already decided before Election Day, surrounded
-      by people who all got the same news feed.
+      somewhere the race was never really a contest before Election Day,
+      surrounded by people who all got the same news feed.
     </p>
   </div>
 </section>
 
 <style>
-  .rigged {
+  .how-lines-drawn {
     padding: 8rem 0;
   }
   .section-label {

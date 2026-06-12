@@ -1,6 +1,6 @@
 <script>
   import Hero        from '$lib/components/sections/Hero.svelte';
-  import Rigged      from '$lib/components/sections/Rigged.svelte';
+  import HowLinesDrawn from '$lib/components/sections/HowLinesDrawn.svelte';
   import Nobody      from '$lib/components/sections/Nobody.svelte';
   import LongGame    from '$lib/components/sections/LongGame.svelte';
   import Scrollytelling from '$lib/components/Scrollytelling.svelte';
@@ -12,13 +12,13 @@
   const surplusSteps = [
     {
       mode: 'intro',
-      text: 'Each dot on this map is a county. The deeper the color, the more votes piled up beyond what the winner needed. Both parties. Every county.',
+      text: 'Each dot on this map is a county. The deeper the color, the more votes accumulated beyond what determined the outcome. Both parties. Every county.',
     },
     {
       mode: 'surplus-blue',
       stat: '11.8M',
       statLabel: 'Democratic surplus votes',
-      text: 'Across safe blue counties nationwide, Democratic votes piled up 11.8 million beyond what their winners needed. New York City alone: 1.3 million. LA County: 897,000. Cook County: 565,000.',
+      text: 'Across safe blue counties nationwide, Democratic votes accumulated 11.8 million beyond what their winners needed. New York City alone: 1.3 million. LA County: 897,000. Cook County: 565,000.',
     },
     {
       mode: 'surplus-red',
@@ -29,8 +29,8 @@
     {
       mode: 'total-surplus',
       stat: '76M',
-      statLabel: 'Votes cast where the outcome was already set',
-      text: 'Combined, 76 million votes — nearly half of all votes cast in 2020 — went to places where the outcome was already decided. They showed up. They got counted. The result was already set before they arrived. Because of geography.',
+      statLabel: 'Votes cast outside the decisive margin',
+      text: 'Combined, 76 million votes — nearly half of all votes cast in 2020 — went to places where the margin was not in question. They were counted. But the result in those places was settled before they were cast. Because of geography.',
     },
     {
       mode: 'zoom-swing',
@@ -44,7 +44,7 @@
   <Hero />
 
   <!-- 2. Narrative: Geographic sorting + gerrymandering -->
-  <Rigged />
+  <HowLinesDrawn />
 
   <!-- 3. Data infographic + Scrollytelling: The Data -->
   <StatBreaker />

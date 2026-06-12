@@ -4,7 +4,7 @@
     <h1>Where It&nbsp;Counts</h1>
     <p class="hero-deck">
       In 2020, 76 million votes were cast in places where the outcome
-      was already decided. Because of geography.
+      where the margin was not in question. Because of geography.
       Here's what the data says about where yours would actually matter,
       and what moving could change.
     </p>

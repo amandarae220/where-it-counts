@@ -14,12 +14,12 @@
       That's not a loophole — that's how it's supposed to work.
     </p>
     <p>
-      State legislative maps are the most important. Those are drawn by state
-      legislators who use them to protect their own seats. Change the
-      population, and you change what maps are legally defensible. Competitive
-      districts at the state level produce more accountable, more moderate
-      elected officials — and those are the people who decide education policy,
-      healthcare access, and what goes on your ballot.
+      State legislative maps matter most. Those are drawn by state legislators
+      who use them to protect their own seats. Change who lives in a district,
+      and the lines have to change with them. When a district is actually
+      competitive, politicians have to work for every vote — and those are the
+      people who set education policy, decide healthcare access, and control
+      what goes on your ballot.
     </p>
 
     <div class="reset-block">
@@ -40,8 +40,8 @@
     <p>
       Moving doesn't fix that overnight. But it starts it. And the
       communities people move <em>to</em> benefit too: new residents, new
-      economic activity, new perspectives — and a slow, organic undoing of
-      the isolation that made the divide feel permanent.
+      economic activity, new perspectives — and a slow breakdown of the
+      distance that made the divide feel permanent.
     </p>
   </div>
 </section>

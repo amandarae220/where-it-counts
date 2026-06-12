@@ -92,7 +92,7 @@
       localMargin: 520,
       trend: 'competitive',
       trendNote: 'NC has been within 2 points for 3 consecutive presidential cycles',
-      blurb: 'North Carolina keeps getting closer. The Research Triangle is one of the fastest-growing metros in the country and a genuine political inflection point — at the presidential level and all the way down the ballot.',
+      blurb: 'North Carolina keeps getting closer. The Research Triangle is one of the fastest-growing metros in the country and a place where the numbers are genuinely moving — at the presidential level and all the way down the ballot.',
     },
     {
       id: 'charlotte',

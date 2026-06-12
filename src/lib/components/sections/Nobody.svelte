@@ -17,8 +17,8 @@
       millions of city dwellers — especially those in their 30s who did
       everything right, have good jobs, and still can't make the math work.
       That's not separate from the political story. It <em>is</em> the
-      political story. The same geographic concentration that made your vote
-      not count also drove housing costs to the point of exclusion.
+      political story. The same clustering that pushed votes past the point
+      of impact also drove housing costs through the roof.
     </p>
 
     <div class="stat-block">
@@ -40,7 +40,7 @@
       </p>
     </div>
 
-    <h3>The intellectual flight nobody talks about.</h3>
+    <h3>The people who left and didn't come back.</h3>
     <p>
       A lot of the people most capable of changing the communities they grew
       up in left those communities — and then slowly stopped feeling like they
@@ -49,12 +49,11 @@
       something to have escaped from rather than something to return to.
     </p>
     <p>
-      That's a cultural failure — and Democrats own a significant share of it.
-      Progressive culture allowed a quiet classism to take hold. One that
-      treats leaving your hometown as graduation and staying as settling. The
-      communities on the receiving end noticed. They felt the condescension
-      long before anyone said it out loud. And a lot of them stopped voting
-      for the party that seemed to look down on them.
+      That's a problem worth naming. A quiet kind of condescension took hold:
+      the idea that leaving your hometown is graduation and staying is settling.
+      The communities on the receiving end noticed. They felt it long before
+      anyone said it out loud. And a lot of them stopped voting for the party
+      that seemed to look down on them.
     </p>
 
     <div class="pull-quote">
