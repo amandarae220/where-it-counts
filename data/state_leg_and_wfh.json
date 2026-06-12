@@ -1,0 +1,2239 @@
+{
+  "state_legislative": {
+    "ga_house": [
+      {
+        "state": "GA",
+        "district": "35",
+        "dem": 14909,
+        "rep": 15189,
+        "total": 30098,
+        "winner": "REP",
+        "margin": 280,
+        "margin_pct": 0.93
+      },
+      {
+        "state": "GA",
+        "district": "52",
+        "dem": 17069,
+        "rep": 16692,
+        "total": 33761,
+        "winner": "DEM",
+        "margin": 377,
+        "margin_pct": 1.12
+      },
+      {
+        "state": "GA",
+        "district": "43",
+        "dem": 15452,
+        "rep": 15928,
+        "total": 31380,
+        "winner": "REP",
+        "margin": 476,
+        "margin_pct": 1.52
+      },
+      {
+        "state": "GA",
+        "district": "132",
+        "dem": 10792,
+        "rep": 11458,
+        "total": 22250,
+        "winner": "REP",
+        "margin": 666,
+        "margin_pct": 2.99
+      },
+      {
+        "state": "GA",
+        "district": "104",
+        "dem": 16547,
+        "rep": 17326,
+        "total": 33873,
+        "winner": "REP",
+        "margin": 779,
+        "margin_pct": 2.3
+      },
+      {
+        "state": "GA",
+        "district": "102",
+        "dem": 14134,
+        "rep": 13313,
+        "total": 27447,
+        "winner": "DEM",
+        "margin": 821,
+        "margin_pct": 2.99
+      },
+      {
+        "state": "GA",
+        "district": "151",
+        "dem": 11185,
+        "rep": 12011,
+        "total": 23196,
+        "winner": "REP",
+        "margin": 826,
+        "margin_pct": 3.56
+      },
+      {
+        "state": "GA",
+        "district": "147",
+        "dem": 10773,
+        "rep": 11794,
+        "total": 22567,
+        "winner": "REP",
+        "margin": 1021,
+        "margin_pct": 4.52
+      },
+      {
+        "state": "GA",
+        "district": "109",
+        "dem": 17009,
+        "rep": 15825,
+        "total": 32834,
+        "winner": "DEM",
+        "margin": 1184,
+        "margin_pct": 3.61
+      },
+      {
+        "state": "GA",
+        "district": "44",
+        "dem": 15623,
+        "rep": 16809,
+        "total": 32432,
+        "winner": "REP",
+        "margin": 1186,
+        "margin_pct": 3.66
+      },
+      {
+        "state": "GA",
+        "district": "48",
+        "dem": 14635,
+        "rep": 13349,
+        "total": 27984,
+        "winner": "DEM",
+        "margin": 1286,
+        "margin_pct": 4.6
+      },
+      {
+        "state": "GA",
+        "district": "164",
+        "dem": 12484,
+        "rep": 13829,
+        "total": 26313,
+        "winner": "REP",
+        "margin": 1345,
+        "margin_pct": 5.11
+      },
+      {
+        "state": "GA",
+        "district": "138",
+        "dem": 8177,
+        "rep": 9542,
+        "total": 17719,
+        "winner": "REP",
+        "margin": 1365,
+        "margin_pct": 7.7
+      },
+      {
+        "state": "GA",
+        "district": "97",
+        "dem": 15520,
+        "rep": 16929,
+        "total": 32449,
+        "winner": "REP",
+        "margin": 1409,
+        "margin_pct": 4.34
+      },
+      {
+        "state": "GA",
+        "district": "50",
+        "dem": 15111,
+        "rep": 13504,
+        "total": 28615,
+        "winner": "DEM",
+        "margin": 1607,
+        "margin_pct": 5.62
+      },
+      {
+        "state": "GA",
+        "district": "49",
+        "dem": 15166,
+        "rep": 16974,
+        "total": 32140,
+        "winner": "REP",
+        "margin": 1808,
+        "margin_pct": 5.63
+      },
+      {
+        "state": "GA",
+        "district": "37",
+        "dem": 15946,
+        "rep": 13603,
+        "total": 29549,
+        "winner": "DEM",
+        "margin": 2343,
+        "margin_pct": 7.93
+      },
+      {
+        "state": "GA",
+        "district": "108",
+        "dem": 14602,
+        "rep": 12034,
+        "total": 26636,
+        "winner": "DEM",
+        "margin": 2568,
+        "margin_pct": 9.64
+      },
+      {
+        "state": "GA",
+        "district": "145",
+        "dem": 9659,
+        "rep": 12371,
+        "total": 22030,
+        "winner": "REP",
+        "margin": 2712,
+        "margin_pct": 12.31
+      },
+      {
+        "state": "GA",
+        "district": "119",
+        "dem": 13852,
+        "rep": 16828,
+        "total": 30680,
+        "winner": "REP",
+        "margin": 2976,
+        "margin_pct": 9.7
+      },
+      {
+        "state": "GA",
+        "district": "51",
+        "dem": 16398,
+        "rep": 13274,
+        "total": 29672,
+        "winner": "DEM",
+        "margin": 3124,
+        "margin_pct": 10.53
+      },
+      {
+        "state": "GA",
+        "district": "110",
+        "dem": 12459,
+        "rep": 15729,
+        "total": 28188,
+        "winner": "REP",
+        "margin": 3270,
+        "margin_pct": 11.6
+      },
+      {
+        "state": "GA",
+        "district": "73",
+        "dem": 12796,
+        "rep": 16263,
+        "total": 29059,
+        "winner": "REP",
+        "margin": 3467,
+        "margin_pct": 11.93
+      },
+      {
+        "state": "GA",
+        "district": "95",
+        "dem": 16530,
+        "rep": 13023,
+        "total": 29553,
+        "winner": "DEM",
+        "margin": 3507,
+        "margin_pct": 11.87
+      },
+      {
+        "state": "GA",
+        "district": "45",
+        "dem": 16006,
+        "rep": 19549,
+        "total": 35555,
+        "winner": "REP",
+        "margin": 3543,
+        "margin_pct": 9.96
+      },
+      {
+        "state": "GA",
+        "district": "34",
+        "dem": 13199,
+        "rep": 16888,
+        "total": 30087,
+        "winner": "REP",
+        "margin": 3689,
+        "margin_pct": 12.26
+      },
+      {
+        "state": "GA",
+        "district": "179",
+        "dem": 11672,
+        "rep": 15441,
+        "total": 27113,
+        "winner": "REP",
+        "margin": 3769,
+        "margin_pct": 13.9
+      },
+      {
+        "state": "GA",
+        "district": "117",
+        "dem": 12940,
+        "rep": 16863,
+        "total": 29803,
+        "winner": "REP",
+        "margin": 3923,
+        "margin_pct": 13.16
+      },
+      {
+        "state": "GA",
+        "district": "173",
+        "dem": 9766,
+        "rep": 14267,
+        "total": 24033,
+        "winner": "REP",
+        "margin": 4501,
+        "margin_pct": 18.73
+      },
+      {
+        "state": "GA",
+        "district": "130",
+        "dem": 11398,
+        "rep": 16023,
+        "total": 27421,
+        "winner": "REP",
+        "margin": 4625,
+        "margin_pct": 16.87
+      },
+      {
+        "state": "GA",
+        "district": "80",
+        "dem": 17347,
+        "rep": 12173,
+        "total": 29520,
+        "winner": "DEM",
+        "margin": 5174,
+        "margin_pct": 17.53
+      },
+      {
+        "state": "GA",
+        "district": "106",
+        "dem": 17611,
+        "rep": 12384,
+        "total": 29995,
+        "winner": "DEM",
+        "margin": 5227,
+        "margin_pct": 17.43
+      },
+      {
+        "state": "GA",
+        "district": "79",
+        "dem": 16602,
+        "rep": 11185,
+        "total": 27787,
+        "winner": "DEM",
+        "margin": 5417,
+        "margin_pct": 19.49
+      },
+      {
+        "state": "GA",
+        "district": "98",
+        "dem": 12888,
+        "rep": 18595,
+        "total": 31483,
+        "winner": "REP",
+        "margin": 5707,
+        "margin_pct": 18.13
+      },
+      {
+        "state": "GA",
+        "district": "54",
+        "dem": 21420,
+        "rep": 15521,
+        "total": 36941,
+        "winner": "DEM",
+        "margin": 5899,
+        "margin_pct": 15.97
+      },
+      {
+        "state": "GA",
+        "district": "29",
+        "dem": 6954,
+        "rep": 12877,
+        "total": 19831,
+        "winner": "REP",
+        "margin": 5923,
+        "margin_pct": 29.87
+      },
+      {
+        "state": "GA",
+        "district": "40",
+        "dem": 20716,
+        "rep": 14773,
+        "total": 35489,
+        "winner": "DEM",
+        "margin": 5943,
+        "margin_pct": 16.75
+      },
+      {
+        "state": "GA",
+        "district": "107",
+        "dem": 16730,
+        "rep": 10514,
+        "total": 27244,
+        "winner": "DEM",
+        "margin": 6216,
+        "margin_pct": 22.82
+      },
+      {
+        "state": "GA",
+        "district": "101",
+        "dem": 15941,
+        "rep": 9713,
+        "total": 25654,
+        "winner": "DEM",
+        "margin": 6228,
+        "margin_pct": 24.28
+      },
+      {
+        "state": "GA",
+        "district": "67",
+        "dem": 10785,
+        "rep": 17648,
+        "total": 28433,
+        "winner": "REP",
+        "margin": 6863,
+        "margin_pct": 24.14
+      },
+      {
+        "state": "GA",
+        "district": "19",
+        "dem": 12132,
+        "rep": 19414,
+        "total": 31546,
+        "winner": "REP",
+        "margin": 7282,
+        "margin_pct": 23.08
+      },
+      {
+        "state": "GA",
+        "district": "47",
+        "dem": 13570,
+        "rep": 21039,
+        "total": 34609,
+        "winner": "REP",
+        "margin": 7469,
+        "margin_pct": 21.58
+      },
+      {
+        "state": "GA",
+        "district": "134",
+        "dem": 9831,
+        "rep": 17591,
+        "total": 27422,
+        "winner": "REP",
+        "margin": 7760,
+        "margin_pct": 28.3
+      },
+      {
+        "state": "GA",
+        "district": "105",
+        "dem": 19869,
+        "rep": 12043,
+        "total": 31912,
+        "winner": "DEM",
+        "margin": 7826,
+        "margin_pct": 24.52
+      },
+      {
+        "state": "GA",
+        "district": "46",
+        "dem": 13615,
+        "rep": 21712,
+        "total": 35327,
+        "winner": "REP",
+        "margin": 8097,
+        "margin_pct": 22.92
+      },
+      {
+        "state": "GA",
+        "district": "158",
+        "dem": 6773,
+        "rep": 15379,
+        "total": 22152,
+        "winner": "REP",
+        "margin": 8606,
+        "margin_pct": 38.85
+      },
+      {
+        "state": "GA",
+        "district": "169",
+        "dem": 5074,
+        "rep": 13759,
+        "total": 18833,
+        "winner": "REP",
+        "margin": 8685,
+        "margin_pct": 46.12
+      },
+      {
+        "state": "GA",
+        "district": "25",
+        "dem": 14689,
+        "rep": 23733,
+        "total": 38422,
+        "winner": "REP",
+        "margin": 9044,
+        "margin_pct": 23.54
+      },
+      {
+        "state": "GA",
+        "district": "176",
+        "dem": 6185,
+        "rep": 15241,
+        "total": 21426,
+        "winner": "REP",
+        "margin": 9056,
+        "margin_pct": 42.27
+      },
+      {
+        "state": "GA",
+        "district": "41",
+        "dem": 14960,
+        "rep": 5878,
+        "total": 20838,
+        "winner": "DEM",
+        "margin": 9082,
+        "margin_pct": 43.58
+      },
+      {
+        "state": "GA",
+        "district": "148",
+        "dem": 6322,
+        "rep": 15443,
+        "total": 21765,
+        "winner": "REP",
+        "margin": 9121,
+        "margin_pct": 41.91
+      },
+      {
+        "state": "GA",
+        "district": "66",
+        "dem": 19407,
+        "rep": 9726,
+        "total": 29133,
+        "winner": "DEM",
+        "margin": 9681,
+        "margin_pct": 33.23
+      },
+      {
+        "state": "GA",
+        "district": "155",
+        "dem": 6214,
+        "rep": 16132,
+        "total": 22346,
+        "winner": "REP",
+        "margin": 9918,
+        "margin_pct": 44.38
+      },
+      {
+        "state": "GA",
+        "district": "144",
+        "dem": 8306,
+        "rep": 18560,
+        "total": 26866,
+        "winner": "REP",
+        "margin": 10254,
+        "margin_pct": 38.17
+      },
+      {
+        "state": "GA",
+        "district": "170",
+        "dem": 4979,
+        "rep": 15626,
+        "total": 20605,
+        "winner": "REP",
+        "margin": 10647,
+        "margin_pct": 51.67
+      },
+      {
+        "state": "GA",
+        "district": "30",
+        "dem": 8003,
+        "rep": 18717,
+        "total": 26720,
+        "winner": "REP",
+        "margin": 10714,
+        "margin_pct": 40.1
+      },
+      {
+        "state": "GA",
+        "district": "20",
+        "dem": 11416,
+        "rep": 22262,
+        "total": 33678,
+        "winner": "REP",
+        "margin": 10846,
+        "margin_pct": 32.21
+      },
+      {
+        "state": "GA",
+        "district": "36",
+        "dem": 13313,
+        "rep": 24536,
+        "total": 37849,
+        "winner": "REP",
+        "margin": 11223,
+        "margin_pct": 29.65
+      },
+      {
+        "state": "GA",
+        "district": "129",
+        "dem": 7152,
+        "rep": 18966,
+        "total": 27248,
+        "winner": "REP",
+        "margin": 11814,
+        "margin_pct": 43.36
+      },
+      {
+        "state": "GA",
+        "district": "18",
+        "dem": 6002,
+        "rep": 18168,
+        "total": 24170,
+        "winner": "REP",
+        "margin": 12166,
+        "margin_pct": 50.34
+      },
+      {
+        "state": "GA",
+        "district": "103",
+        "dem": 11652,
+        "rep": 24204,
+        "total": 35856,
+        "winner": "REP",
+        "margin": 12552,
+        "margin_pct": 35.01
+      },
+      {
+        "state": "GA",
+        "district": "33",
+        "dem": 6979,
+        "rep": 19768,
+        "total": 26747,
+        "winner": "REP",
+        "margin": 12789,
+        "margin_pct": 47.81
+      },
+      {
+        "state": "GA",
+        "district": "16",
+        "dem": 5074,
+        "rep": 18106,
+        "total": 23180,
+        "winner": "REP",
+        "margin": 13032,
+        "margin_pct": 56.22
+      },
+      {
+        "state": "GA",
+        "district": "131",
+        "dem": 6816,
+        "rep": 20246,
+        "total": 27062,
+        "winner": "REP",
+        "margin": 13430,
+        "margin_pct": 49.63
+      },
+      {
+        "state": "GA",
+        "district": "12",
+        "dem": 4114,
+        "rep": 17666,
+        "total": 21780,
+        "winner": "REP",
+        "margin": 13552,
+        "margin_pct": 62.22
+      },
+      {
+        "state": "GA",
+        "district": "17",
+        "dem": 9410,
+        "rep": 23833,
+        "total": 33243,
+        "winner": "REP",
+        "margin": 14423,
+        "margin_pct": 43.39
+      },
+      {
+        "state": "GA",
+        "district": "122",
+        "dem": 11224,
+        "rep": 26081,
+        "total": 37305,
+        "winner": "REP",
+        "margin": 14857,
+        "margin_pct": 39.83
+      },
+      {
+        "state": "GA",
+        "district": "166",
+        "dem": 11115,
+        "rep": 26058,
+        "total": 37173,
+        "winner": "REP",
+        "margin": 14943,
+        "margin_pct": 40.2
+      },
+      {
+        "state": "GA",
+        "district": "69",
+        "dem": 5286,
+        "rep": 20856,
+        "total": 26142,
+        "winner": "REP",
+        "margin": 15570,
+        "margin_pct": 59.56
+      },
+      {
+        "state": "GA",
+        "district": "71",
+        "dem": 9564,
+        "rep": 25530,
+        "total": 35094,
+        "winner": "REP",
+        "margin": 15966,
+        "margin_pct": 45.49
+      },
+      {
+        "state": "GA",
+        "district": "21",
+        "dem": 9681,
+        "rep": 25787,
+        "total": 35468,
+        "winner": "REP",
+        "margin": 16106,
+        "margin_pct": 45.41
+      },
+      {
+        "state": "GA",
+        "district": "39",
+        "dem": 20613,
+        "rep": 4411,
+        "total": 25024,
+        "winner": "DEM",
+        "margin": 16202,
+        "margin_pct": 64.75
+      },
+      {
+        "state": "GA",
+        "district": "115",
+        "dem": 6895,
+        "rep": 23812,
+        "total": 30707,
+        "winner": "REP",
+        "margin": 16917,
+        "margin_pct": 55.09
+      },
+      {
+        "state": "GA",
+        "district": "63",
+        "dem": 23191,
+        "rep": 6247,
+        "total": 29438,
+        "winner": "DEM",
+        "margin": 16944,
+        "margin_pct": 57.56
+      },
+      {
+        "state": "GA",
+        "district": "72",
+        "dem": 9874,
+        "rep": 26977,
+        "total": 36851,
+        "winner": "REP",
+        "margin": 17103,
+        "margin_pct": 46.41
+      },
+      {
+        "state": "GA",
+        "district": "10",
+        "dem": 4116,
+        "rep": 21396,
+        "total": 25512,
+        "winner": "REP",
+        "margin": 17280,
+        "margin_pct": 67.73
+      },
+      {
+        "state": "GA",
+        "district": "24",
+        "dem": 10136,
+        "rep": 27912,
+        "total": 38048,
+        "winner": "REP",
+        "margin": 17776,
+        "margin_pct": 46.72
+      },
+      {
+        "state": "GA",
+        "district": "32",
+        "dem": 4180,
+        "rep": 22259,
+        "total": 26439,
+        "winner": "REP",
+        "margin": 18079,
+        "margin_pct": 68.38
+      },
+      {
+        "state": "GA",
+        "district": "11",
+        "dem": 4272,
+        "rep": 22633,
+        "total": 26905,
+        "winner": "REP",
+        "margin": 18361,
+        "margin_pct": 68.24
+      },
+      {
+        "state": "GA",
+        "district": "31",
+        "dem": 6524,
+        "rep": 26632,
+        "total": 33156,
+        "winner": "REP",
+        "margin": 20108,
+        "margin_pct": 60.65
+      },
+      {
+        "state": "GA",
+        "district": "26",
+        "dem": 8600,
+        "rep": 29178,
+        "total": 37778,
+        "winner": "REP",
+        "margin": 20578,
+        "margin_pct": 54.47
+      },
+      {
+        "state": "GA",
+        "district": "22",
+        "dem": 10962,
+        "rep": 31898,
+        "total": 42860,
+        "winner": "REP",
+        "margin": 20936,
+        "margin_pct": 48.85
+      },
+      {
+        "state": "GA",
+        "district": "9",
+        "dem": 5046,
+        "rep": 26310,
+        "total": 31356,
+        "winner": "REP",
+        "margin": 21264,
+        "margin_pct": 67.81
+      },
+      {
+        "state": "GA",
+        "district": "93",
+        "dem": 26638,
+        "rep": 5164,
+        "total": 31802,
+        "winner": "DEM",
+        "margin": 21474,
+        "margin_pct": 67.52
+      },
+      {
+        "state": "GA",
+        "district": "7",
+        "dem": 5255,
+        "rep": 27074,
+        "total": 32329,
+        "winner": "REP",
+        "margin": 21819,
+        "margin_pct": 67.49
+      },
+      {
+        "state": "GA",
+        "district": "8",
+        "dem": 6407,
+        "rep": 29195,
+        "total": 35602,
+        "winner": "REP",
+        "margin": 22788,
+        "margin_pct": 64.01
+      }
+    ],
+    "ga_senate": [
+      {
+        "state": "GA",
+        "district": "17",
+        "dem": 50513,
+        "rep": 52454,
+        "total": 102967,
+        "winner": "REP",
+        "margin": 1941,
+        "margin_pct": 1.89
+      },
+      {
+        "state": "GA",
+        "district": "56",
+        "dem": 49284,
+        "rep": 51476,
+        "total": 100760,
+        "winner": "REP",
+        "margin": 2192,
+        "margin_pct": 2.18
+      },
+      {
+        "state": "GA",
+        "district": "9",
+        "dem": 53941,
+        "rep": 49879,
+        "total": 103820,
+        "winner": "DEM",
+        "margin": 4062,
+        "margin_pct": 3.91
+      },
+      {
+        "state": "GA",
+        "district": "48",
+        "dem": 49184,
+        "rep": 38358,
+        "total": 87542,
+        "winner": "DEM",
+        "margin": 10826,
+        "margin_pct": 12.37
+      },
+      {
+        "state": "GA",
+        "district": "45",
+        "dem": 45493,
+        "rep": 56965,
+        "total": 102458,
+        "winner": "REP",
+        "margin": 11472,
+        "margin_pct": 11.2
+      },
+      {
+        "state": "GA",
+        "district": "32",
+        "dem": 50005,
+        "rep": 63544,
+        "total": 113549,
+        "winner": "REP",
+        "margin": 13539,
+        "margin_pct": 11.92
+      },
+      {
+        "state": "GA",
+        "district": "23",
+        "dem": 32069,
+        "rep": 46712,
+        "total": 78781,
+        "winner": "REP",
+        "margin": 14643,
+        "margin_pct": 18.59
+      },
+      {
+        "state": "GA",
+        "district": "37",
+        "dem": 45370,
+        "rep": 60238,
+        "total": 105608,
+        "winner": "REP",
+        "margin": 14868,
+        "margin_pct": 14.08
+      },
+      {
+        "state": "GA",
+        "district": "8",
+        "dem": 26819,
+        "rep": 43324,
+        "total": 70143,
+        "winner": "REP",
+        "margin": 16505,
+        "margin_pct": 23.53
+      },
+      {
+        "state": "GA",
+        "district": "12",
+        "dem": 40396,
+        "rep": 22546,
+        "total": 62942,
+        "winner": "DEM",
+        "margin": 17850,
+        "margin_pct": 28.36
+      },
+      {
+        "state": "GA",
+        "district": "40",
+        "dem": 54359,
+        "rep": 35494,
+        "total": 89853,
+        "winner": "DEM",
+        "margin": 18865,
+        "margin_pct": 21.0
+      },
+      {
+        "state": "GA",
+        "district": "46",
+        "dem": 37924,
+        "rep": 59278,
+        "total": 97202,
+        "winner": "REP",
+        "margin": 21354,
+        "margin_pct": 21.97
+      },
+      {
+        "state": "GA",
+        "district": "6",
+        "dem": 62148,
+        "rep": 38891,
+        "total": 101039,
+        "winner": "DEM",
+        "margin": 23257,
+        "margin_pct": 23.02
+      },
+      {
+        "state": "GA",
+        "district": "20",
+        "dem": 31257,
+        "rep": 57946,
+        "total": 89203,
+        "winner": "REP",
+        "margin": 26689,
+        "margin_pct": 29.92
+      },
+      {
+        "state": "GA",
+        "district": "13",
+        "dem": 21178,
+        "rep": 48153,
+        "total": 69331,
+        "winner": "REP",
+        "margin": 26975,
+        "margin_pct": 38.91
+      },
+      {
+        "state": "GA",
+        "district": "47",
+        "dem": 31255,
+        "rep": 60282,
+        "total": 91537,
+        "winner": "REP",
+        "margin": 29027,
+        "margin_pct": 31.71
+      },
+      {
+        "state": "GA",
+        "district": "30",
+        "dem": 28023,
+        "rep": 58303,
+        "total": 86326,
+        "winner": "REP",
+        "margin": 30280,
+        "margin_pct": 35.08
+      },
+      {
+        "state": "GA",
+        "district": "25",
+        "dem": 29315,
+        "rep": 61330,
+        "total": 90645,
+        "winner": "REP",
+        "margin": 32015,
+        "margin_pct": 35.32
+      },
+      {
+        "state": "GA",
+        "district": "16",
+        "dem": 30643,
+        "rep": 65626,
+        "total": 96269,
+        "winner": "REP",
+        "margin": 34983,
+        "margin_pct": 36.34
+      },
+      {
+        "state": "GA",
+        "district": "14",
+        "dem": 28505,
+        "rep": 66534,
+        "total": 95039,
+        "winner": "REP",
+        "margin": 38029,
+        "margin_pct": 40.01
+      },
+      {
+        "state": "GA",
+        "district": "31",
+        "dem": 27146,
+        "rep": 66020,
+        "total": 93166,
+        "winner": "REP",
+        "margin": 38874,
+        "margin_pct": 41.73
+      },
+      {
+        "state": "GA",
+        "district": "52",
+        "dem": 17755,
+        "rep": 57621,
+        "total": 75376,
+        "winner": "REP",
+        "margin": 39866,
+        "margin_pct": 52.89
+      },
+      {
+        "state": "GA",
+        "district": "41",
+        "dem": 58154,
+        "rep": 14828,
+        "total": 72982,
+        "winner": "DEM",
+        "margin": 43326,
+        "margin_pct": 59.37
+      },
+      {
+        "state": "GA",
+        "district": "43",
+        "dem": 67857,
+        "rep": 19703,
+        "total": 87560,
+        "winner": "DEM",
+        "margin": 48154,
+        "margin_pct": 55.0
+      },
+      {
+        "state": "GA",
+        "district": "27",
+        "dem": 37340,
+        "rep": 87192,
+        "total": 124532,
+        "winner": "REP",
+        "margin": 49852,
+        "margin_pct": 40.03
+      },
+      {
+        "state": "GA",
+        "district": "50",
+        "dem": 14493,
+        "rep": 71693,
+        "total": 86186,
+        "winner": "REP",
+        "margin": 57200,
+        "margin_pct": 66.37
+      },
+      {
+        "state": "GA",
+        "district": "51",
+        "dem": 17625,
+        "rep": 84767,
+        "total": 102392,
+        "winner": "REP",
+        "margin": 67142,
+        "margin_pct": 65.57
+      },
+      {
+        "state": "GA",
+        "district": "44",
+        "dem": 77593,
+        "rep": 10405,
+        "total": 87998,
+        "winner": "DEM",
+        "margin": 67188,
+        "margin_pct": 76.35
+      }
+    ],
+    "wi_assembly": [
+      {
+        "state": "WI",
+        "district": "73",
+        "dem": 16625,
+        "rep": 16486,
+        "total": 33113,
+        "winner": "DEM",
+        "margin": 139,
+        "margin_pct": 0.42,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "13",
+        "dem": 19318,
+        "rep": 18583,
+        "total": 37928,
+        "winner": "DEM",
+        "margin": 735,
+        "margin_pct": 1.94,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "74",
+        "dem": 18163,
+        "rep": 17119,
+        "total": 35293,
+        "winner": "DEM",
+        "margin": 1044,
+        "margin_pct": 2.96,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "24",
+        "dem": 18924,
+        "rep": 20075,
+        "total": 39019,
+        "winner": "REP",
+        "margin": 1151,
+        "margin_pct": 2.95,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "51",
+        "dem": 14679,
+        "rep": 15937,
+        "total": 30624,
+        "winner": "REP",
+        "margin": 1258,
+        "margin_pct": 4.11,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "82",
+        "dem": 15925,
+        "rep": 17205,
+        "total": 34249,
+        "winner": "REP",
+        "margin": 1280,
+        "margin_pct": 3.74,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "23",
+        "dem": 21052,
+        "rep": 19728,
+        "total": 40810,
+        "winner": "DEM",
+        "margin": 1324,
+        "margin_pct": 3.24,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "88",
+        "dem": 15673,
+        "rep": 17214,
+        "total": 32906,
+        "winner": "REP",
+        "margin": 1541,
+        "margin_pct": 4.68,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "4",
+        "dem": 15804,
+        "rep": 17811,
+        "total": 33630,
+        "winner": "REP",
+        "margin": 2007,
+        "margin_pct": 5.97,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "54",
+        "dem": 15487,
+        "rep": 13063,
+        "total": 28583,
+        "winner": "DEM",
+        "margin": 2424,
+        "margin_pct": 8.48,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "45",
+        "dem": 14451,
+        "rep": 11895,
+        "total": 26370,
+        "winner": "DEM",
+        "margin": 2556,
+        "margin_pct": 9.69,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "94",
+        "dem": 19186,
+        "rep": 16526,
+        "total": 36590,
+        "winner": "DEM",
+        "margin": 2660,
+        "margin_pct": 7.27,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "15",
+        "dem": 14134,
+        "rep": 17133,
+        "total": 31308,
+        "winner": "REP",
+        "margin": 2999,
+        "margin_pct": 9.58,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "21",
+        "dem": 14708,
+        "rep": 17729,
+        "total": 32466,
+        "winner": "REP",
+        "margin": 3021,
+        "margin_pct": 9.31,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "85",
+        "dem": 13515,
+        "rep": 16599,
+        "total": 30132,
+        "winner": "REP",
+        "margin": 3084,
+        "margin_pct": 10.23,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "14",
+        "dem": 21370,
+        "rep": 18186,
+        "total": 39579,
+        "winner": "DEM",
+        "margin": 3184,
+        "margin_pct": 8.04,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "43",
+        "dem": 17643,
+        "rep": 14263,
+        "total": 31939,
+        "winner": "DEM",
+        "margin": 3380,
+        "margin_pct": 10.58,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "55",
+        "dem": 15658,
+        "rep": 19056,
+        "total": 34749,
+        "winner": "REP",
+        "margin": 3398,
+        "margin_pct": 9.78,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "71",
+        "dem": 17753,
+        "rep": 14206,
+        "total": 31979,
+        "winner": "DEM",
+        "margin": 3547,
+        "margin_pct": 11.09,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "64",
+        "dem": 16364,
+        "rep": 12813,
+        "total": 29219,
+        "winner": "DEM",
+        "margin": 3551,
+        "margin_pct": 12.15,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "57",
+        "dem": 15972,
+        "rep": 12277,
+        "total": 28260,
+        "winner": "DEM",
+        "margin": 3695,
+        "margin_pct": 13.08,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "96",
+        "dem": 13059,
+        "rep": 16812,
+        "total": 29876,
+        "winner": "REP",
+        "margin": 3753,
+        "margin_pct": 12.56,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "90",
+        "dem": 12756,
+        "rep": 8429,
+        "total": 21210,
+        "winner": "DEM",
+        "margin": 4327,
+        "margin_pct": 20.4,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "30",
+        "dem": 16322,
+        "rep": 20711,
+        "total": 37062,
+        "winner": "REP",
+        "margin": 4389,
+        "margin_pct": 11.84,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "81",
+        "dem": 18914,
+        "rep": 14314,
+        "total": 33241,
+        "winner": "DEM",
+        "margin": 4600,
+        "margin_pct": 13.84,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "65",
+        "dem": 14356,
+        "rep": 9444,
+        "total": 23829,
+        "winner": "DEM",
+        "margin": 4912,
+        "margin_pct": 20.61,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "92",
+        "dem": 12220,
+        "rep": 17301,
+        "total": 29534,
+        "winner": "REP",
+        "margin": 5081,
+        "margin_pct": 17.2,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "49",
+        "dem": 11528,
+        "rep": 16741,
+        "total": 28282,
+        "winner": "REP",
+        "margin": 5213,
+        "margin_pct": 18.43,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "37",
+        "dem": 14142,
+        "rep": 19406,
+        "total": 34602,
+        "winner": "REP",
+        "margin": 5264,
+        "margin_pct": 15.21,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "26",
+        "dem": 12675,
+        "rep": 18224,
+        "total": 30925,
+        "winner": "REP",
+        "margin": 5549,
+        "margin_pct": 17.94,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "97",
+        "dem": 12770,
+        "rep": 18556,
+        "total": 31364,
+        "winner": "REP",
+        "margin": 5786,
+        "margin_pct": 18.45,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "63",
+        "dem": 14132,
+        "rep": 19919,
+        "total": 34087,
+        "winner": "REP",
+        "margin": 5787,
+        "margin_pct": 16.98,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "44",
+        "dem": 17205,
+        "rep": 11335,
+        "total": 28621,
+        "winner": "DEM",
+        "margin": 5870,
+        "margin_pct": 20.51,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "42",
+        "dem": 13381,
+        "rep": 19404,
+        "total": 32802,
+        "winner": "REP",
+        "margin": 6023,
+        "margin_pct": 18.36,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "62",
+        "dem": 14463,
+        "rep": 20540,
+        "total": 35034,
+        "winner": "REP",
+        "margin": 6077,
+        "margin_pct": 17.35,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "31",
+        "dem": 13551,
+        "rep": 19962,
+        "total": 33543,
+        "winner": "REP",
+        "margin": 6411,
+        "margin_pct": 19.11,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "29",
+        "dem": 12509,
+        "rep": 18961,
+        "total": 31483,
+        "winner": "REP",
+        "margin": 6452,
+        "margin_pct": 20.49,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "8",
+        "dem": 8914,
+        "rep": 2375,
+        "total": 11326,
+        "winner": "DEM",
+        "margin": 6539,
+        "margin_pct": 57.73,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "72",
+        "dem": 12623,
+        "rep": 19208,
+        "total": 31851,
+        "winner": "REP",
+        "margin": 6585,
+        "margin_pct": 20.67,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "3",
+        "dem": 14703,
+        "rep": 21316,
+        "total": 36023,
+        "winner": "REP",
+        "margin": 6613,
+        "margin_pct": 18.36,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "38",
+        "dem": 16163,
+        "rep": 22786,
+        "total": 38972,
+        "winner": "REP",
+        "margin": 6623,
+        "margin_pct": 16.99,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "68",
+        "dem": 12162,
+        "rep": 18993,
+        "total": 31162,
+        "winner": "REP",
+        "margin": 6831,
+        "margin_pct": 21.92,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "91",
+        "dem": 18758,
+        "rep": 11530,
+        "total": 30322,
+        "winner": "DEM",
+        "margin": 7228,
+        "margin_pct": 23.84,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "52",
+        "dem": 11674,
+        "rep": 19028,
+        "total": 30702,
+        "winner": "REP",
+        "margin": 7354,
+        "margin_pct": 23.95,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "9",
+        "dem": 11981,
+        "rep": 4458,
+        "total": 16464,
+        "winner": "DEM",
+        "margin": 7523,
+        "margin_pct": 45.69,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "32",
+        "dem": 12460,
+        "rep": 20164,
+        "total": 32657,
+        "winner": "REP",
+        "margin": 7704,
+        "margin_pct": 23.59,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "50",
+        "dem": 10872,
+        "rep": 18757,
+        "total": 29638,
+        "winner": "REP",
+        "margin": 7885,
+        "margin_pct": 26.6,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "75",
+        "dem": 12141,
+        "rep": 20108,
+        "total": 32258,
+        "winner": "REP",
+        "margin": 7967,
+        "margin_pct": 24.7,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "56",
+        "dem": 15054,
+        "rep": 23083,
+        "total": 38142,
+        "winner": "REP",
+        "margin": 8029,
+        "margin_pct": 21.05,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "41",
+        "dem": 10428,
+        "rep": 18604,
+        "total": 30724,
+        "winner": "REP",
+        "margin": 8176,
+        "margin_pct": 26.61,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "33",
+        "dem": 13228,
+        "rep": 21496,
+        "total": 34755,
+        "winner": "REP",
+        "margin": 8268,
+        "margin_pct": 23.79,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "66",
+        "dem": 14522,
+        "rep": 6131,
+        "total": 20694,
+        "winner": "DEM",
+        "margin": 8391,
+        "margin_pct": 40.55,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "93",
+        "dem": 13773,
+        "rep": 22179,
+        "total": 35973,
+        "winner": "REP",
+        "margin": 8406,
+        "margin_pct": 23.37,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "25",
+        "dem": 10703,
+        "rep": 19593,
+        "total": 30314,
+        "winner": "REP",
+        "margin": 8890,
+        "margin_pct": 29.33,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "69",
+        "dem": 9606,
+        "rep": 18568,
+        "total": 28197,
+        "winner": "REP",
+        "margin": 8962,
+        "margin_pct": 31.78,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "1",
+        "dem": 14462,
+        "rep": 23441,
+        "total": 37920,
+        "winner": "REP",
+        "margin": 8979,
+        "margin_pct": 23.68,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "67",
+        "dem": 11923,
+        "rep": 21172,
+        "total": 33098,
+        "winner": "REP",
+        "margin": 9249,
+        "margin_pct": 27.94,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "2",
+        "dem": 12970,
+        "rep": 22244,
+        "total": 35248,
+        "winner": "REP",
+        "margin": 9274,
+        "margin_pct": 26.31,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "95",
+        "dem": 19684,
+        "rep": 10271,
+        "total": 29992,
+        "winner": "DEM",
+        "margin": 9413,
+        "margin_pct": 31.39,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "28",
+        "dem": 12230,
+        "rep": 21678,
+        "total": 33911,
+        "winner": "REP",
+        "margin": 9448,
+        "margin_pct": 27.86,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "35",
+        "dem": 11105,
+        "rep": 20913,
+        "total": 32020,
+        "winner": "REP",
+        "margin": 9808,
+        "margin_pct": 30.63,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "34",
+        "dem": 14267,
+        "rep": 24652,
+        "total": 38964,
+        "winner": "REP",
+        "margin": 10385,
+        "margin_pct": 26.65,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "70",
+        "dem": 10318,
+        "rep": 20708,
+        "total": 31046,
+        "winner": "REP",
+        "margin": 10390,
+        "margin_pct": 33.47,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "6",
+        "dem": 9378,
+        "rep": 21283,
+        "total": 30666,
+        "winner": "REP",
+        "margin": 11905,
+        "margin_pct": 38.82,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "80",
+        "dem": 26526,
+        "rep": 14590,
+        "total": 41138,
+        "winner": "DEM",
+        "margin": 11936,
+        "margin_pct": 29.01,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "39",
+        "dem": 10049,
+        "rep": 22085,
+        "total": 32134,
+        "winner": "REP",
+        "margin": 12036,
+        "margin_pct": 37.46,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "40",
+        "dem": 9654,
+        "rep": 21902,
+        "total": 31568,
+        "winner": "REP",
+        "margin": 12248,
+        "margin_pct": 38.8,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "89",
+        "dem": 10374,
+        "rep": 22823,
+        "total": 33207,
+        "winner": "REP",
+        "margin": 12449,
+        "margin_pct": 37.49,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "87",
+        "dem": 8887,
+        "rep": 21595,
+        "total": 30490,
+        "winner": "REP",
+        "margin": 12708,
+        "margin_pct": 41.68,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "46",
+        "dem": 25919,
+        "rep": 12331,
+        "total": 38285,
+        "winner": "DEM",
+        "margin": 13588,
+        "margin_pct": 35.49,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "12",
+        "dem": 18539,
+        "rep": 4117,
+        "total": 22699,
+        "winner": "DEM",
+        "margin": 14422,
+        "margin_pct": 63.54,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "11",
+        "dem": 18329,
+        "rep": 3299,
+        "total": 21654,
+        "winner": "DEM",
+        "margin": 15030,
+        "margin_pct": 69.41,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "79",
+        "dem": 29719,
+        "rep": 14507,
+        "total": 44267,
+        "winner": "DEM",
+        "margin": 15212,
+        "margin_pct": 34.36,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "83",
+        "dem": 11748,
+        "rep": 27019,
+        "total": 38802,
+        "winner": "REP",
+        "margin": 15271,
+        "margin_pct": 39.36,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "47",
+        "dem": 27947,
+        "rep": 9331,
+        "total": 37317,
+        "winner": "DEM",
+        "margin": 18616,
+        "margin_pct": 49.89,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "17",
+        "dem": 22418,
+        "rep": 3638,
+        "total": 26089,
+        "winner": "DEM",
+        "margin": 18780,
+        "margin_pct": 71.98,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "19",
+        "dem": 27552,
+        "rep": 7535,
+        "total": 35139,
+        "winner": "DEM",
+        "margin": 20017,
+        "margin_pct": 56.97,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "48",
+        "dem": 30074,
+        "rep": 7650,
+        "total": 37769,
+        "winner": "DEM",
+        "margin": 22424,
+        "margin_pct": 59.37,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "61",
+        "dem": 8,
+        "rep": 28254,
+        "total": 29352,
+        "winner": "REP",
+        "margin": 28246,
+        "margin_pct": 96.23,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "76",
+        "dem": 35731,
+        "rep": 4779,
+        "total": 40594,
+        "winner": "DEM",
+        "margin": 30952,
+        "margin_pct": 76.25,
+        "competitive": false
+      }
+    ],
+    "wi_senate": [
+      {
+        "state": "WI",
+        "district": "32",
+        "dem": 48877,
+        "rep": 48295,
+        "total": 97239,
+        "winner": "DEM",
+        "margin": 582,
+        "margin_pct": 0.6,
+        "competitive": true
+      },
+      {
+        "state": "WI",
+        "district": "30",
+        "dem": 39711,
+        "rep": 47948,
+        "total": 87733,
+        "winner": "REP",
+        "margin": 8237,
+        "margin_pct": 9.39,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "8",
+        "dem": 54693,
+        "rep": 64906,
+        "total": 119666,
+        "winner": "REP",
+        "margin": 10213,
+        "margin_pct": 8.53,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "24",
+        "dem": 41419,
+        "rep": 53720,
+        "total": 95198,
+        "winner": "REP",
+        "margin": 12301,
+        "margin_pct": 12.92,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "18",
+        "dem": 36274,
+        "rep": 52490,
+        "total": 88826,
+        "winner": "REP",
+        "margin": 16216,
+        "margin_pct": 18.26,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "10",
+        "dem": 41410,
+        "rep": 61914,
+        "total": 103353,
+        "winner": "REP",
+        "margin": 20504,
+        "margin_pct": 19.84,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "28",
+        "dem": 43391,
+        "rep": 64179,
+        "total": 107650,
+        "winner": "REP",
+        "margin": 20788,
+        "margin_pct": 19.31,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "14",
+        "dem": 33459,
+        "rep": 61883,
+        "total": 95389,
+        "winner": "REP",
+        "margin": 28424,
+        "margin_pct": 29.8,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "12",
+        "dem": 35386,
+        "rep": 67800,
+        "total": 103256,
+        "winner": "REP",
+        "margin": 32414,
+        "margin_pct": 31.39,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "6",
+        "dem": 60057,
+        "rep": 7555,
+        "total": 67855,
+        "winner": "DEM",
+        "margin": 52502,
+        "margin_pct": 77.37,
+        "competitive": false
+      },
+      {
+        "state": "WI",
+        "district": "16",
+        "dem": 83526,
+        "rep": 30121,
+        "total": 113755,
+        "winner": "DEM",
+        "margin": 53405,
+        "margin_pct": 46.95,
+        "competitive": false
+      }
+    ]
+  },
+  "remote_work": {
+    "by_occupation": [
+      {
+        "occupation": "Computer & Mathematical",
+        "pct_wfh": 71,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Management",
+        "pct_wfh": 62,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Business & Financial Ops",
+        "pct_wfh": 58,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Legal",
+        "pct_wfh": 54,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Architecture & Engineering",
+        "pct_wfh": 47,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Life, Physical & Social Sci",
+        "pct_wfh": 44,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Arts, Design & Media",
+        "pct_wfh": 42,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Education & Library",
+        "pct_wfh": 38,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Sales & Related",
+        "pct_wfh": 28,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Office & Admin Support",
+        "pct_wfh": 26,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Healthcare Practitioners",
+        "pct_wfh": 18,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Community & Social Service",
+        "pct_wfh": 16,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Service Occupations",
+        "pct_wfh": 5,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Construction & Extraction",
+        "pct_wfh": 2,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Transportation & Material",
+        "pct_wfh": 2,
+        "source": "BLS ATUS 2023"
+      },
+      {
+        "occupation": "Production (Manufacturing)",
+        "pct_wfh": 3,
+        "source": "BLS ATUS 2023"
+      }
+    ],
+    "overall_pct_remote_eligible": 41,
+    "source": "BLS American Time Use Survey 2023"
+  }
+}

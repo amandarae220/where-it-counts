@@ -1,0 +1,434 @@
+{
+  "safe_blue_surplus_total": 6301942,
+  "safe_red_surplus_total": 1817685,
+  "swing_state_margins": {
+    "Georgia": {
+      "margin": 11779,
+      "margin_pct": 0.24,
+      "winner": "biden"
+    },
+    "Arizona": {
+      "margin": 10457,
+      "margin_pct": 0.31,
+      "winner": "biden"
+    },
+    "Wisconsin": {
+      "margin": 20682,
+      "margin_pct": 0.64,
+      "winner": "biden"
+    },
+    "Pennsylvania": {
+      "margin": 80555,
+      "margin_pct": 1.18,
+      "winner": "biden"
+    },
+    "Nevada": {
+      "margin": 33596,
+      "margin_pct": 2.45,
+      "winner": "biden"
+    },
+    "Michigan": {
+      "margin": 154188,
+      "margin_pct": 2.83,
+      "winner": "biden"
+    }
+  },
+  "by_state": [
+    {
+      "state": "California",
+      "biden": 11110250,
+      "trump": 6005961,
+      "total_ev": 54,
+      "biden_ev": 54,
+      "winner": "biden",
+      "margin": 5104289,
+      "margin_pct": 29.82,
+      "surplus": 2552143,
+      "loser_wasted": 6005961,
+      "total_wasted": 8558104
+    },
+    {
+      "state": "New York",
+      "biden": 5244886,
+      "trump": 3251997,
+      "total_ev": 29,
+      "biden_ev": 29,
+      "winner": "biden",
+      "margin": 1992889,
+      "margin_pct": 23.45,
+      "surplus": 996443,
+      "loser_wasted": 3251997,
+      "total_wasted": 4248440
+    },
+    {
+      "state": "Illinois",
+      "biden": 3471915,
+      "trump": 2446891,
+      "total_ev": 20,
+      "biden_ev": 20,
+      "winner": "biden",
+      "margin": 1025024,
+      "margin_pct": 17.32,
+      "surplus": 512511,
+      "loser_wasted": 2446891,
+      "total_wasted": 2959402
+    },
+    {
+      "state": "Massachusetts",
+      "biden": 2382202,
+      "trump": 1167202,
+      "total_ev": 11,
+      "biden_ev": 11,
+      "winner": "biden",
+      "margin": 1215000,
+      "margin_pct": 34.23,
+      "surplus": 607499,
+      "loser_wasted": 1167202,
+      "total_wasted": 1774701
+    },
+    {
+      "state": "Washington",
+      "biden": 2369612,
+      "trump": 1584651,
+      "total_ev": 12,
+      "biden_ev": 12,
+      "winner": "biden",
+      "margin": 784961,
+      "margin_pct": 19.85,
+      "surplus": 392479,
+      "loser_wasted": 1584651,
+      "total_wasted": 1977130
+    },
+    {
+      "state": "Maryland",
+      "biden": 1985023,
+      "trump": 976414,
+      "total_ev": 10,
+      "biden_ev": 10,
+      "winner": "biden",
+      "margin": 1008609,
+      "margin_pct": 34.06,
+      "surplus": 504303,
+      "loser_wasted": 976414,
+      "total_wasted": 1480717
+    },
+    {
+      "state": "New Jersey",
+      "biden": 2608400,
+      "trump": 1883313,
+      "total_ev": 14,
+      "biden_ev": 14,
+      "winner": "biden",
+      "margin": 725087,
+      "margin_pct": 16.14,
+      "surplus": 362542,
+      "loser_wasted": 1883313,
+      "total_wasted": 2245855
+    },
+    {
+      "state": "Connecticut",
+      "biden": 1080831,
+      "trump": 714717,
+      "total_ev": 7,
+      "biden_ev": 7,
+      "winner": "biden",
+      "margin": 366114,
+      "margin_pct": 20.39,
+      "surplus": 183056,
+      "loser_wasted": 714717,
+      "total_wasted": 897773
+    },
+    {
+      "state": "Oregon",
+      "biden": 1340383,
+      "trump": 958448,
+      "total_ev": 7,
+      "biden_ev": 7,
+      "winner": "biden",
+      "margin": 381935,
+      "margin_pct": 16.61,
+      "surplus": 190966,
+      "loser_wasted": 958448,
+      "total_wasted": 1149414
+    },
+    {
+      "state": "Wyoming",
+      "biden": 73491,
+      "trump": 193559,
+      "total_ev": 3,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 120068,
+      "margin_pct": 44.96,
+      "surplus": 60033,
+      "loser_wasted": 73491,
+      "total_wasted": 133524
+    },
+    {
+      "state": "West Virginia",
+      "biden": 235984,
+      "trump": 545382,
+      "total_ev": 5,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 309398,
+      "margin_pct": 39.6,
+      "surplus": 154698,
+      "loser_wasted": 235984,
+      "total_wasted": 390682
+    },
+    {
+      "state": "Oklahoma",
+      "biden": 503890,
+      "trump": 1020280,
+      "total_ev": 7,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 516390,
+      "margin_pct": 33.88,
+      "surplus": 258194,
+      "loser_wasted": 503890,
+      "total_wasted": 762084
+    },
+    {
+      "state": "North Dakota",
+      "biden": 114902,
+      "trump": 235595,
+      "total_ev": 3,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 120693,
+      "margin_pct": 34.43,
+      "surplus": 60345,
+      "loser_wasted": 114902,
+      "total_wasted": 175247
+    },
+    {
+      "state": "South Dakota",
+      "biden": 150471,
+      "trump": 261043,
+      "total_ev": 3,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 110572,
+      "margin_pct": 26.87,
+      "surplus": 55285,
+      "loser_wasted": 150471,
+      "total_wasted": 205756
+    },
+    {
+      "state": "Kentucky",
+      "biden": 772474,
+      "trump": 1326646,
+      "total_ev": 8,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 554172,
+      "margin_pct": 26.4,
+      "surplus": 277085,
+      "loser_wasted": 772474,
+      "total_wasted": 1049559
+    },
+    {
+      "state": "Alabama",
+      "biden": 849648,
+      "trump": 1441170,
+      "total_ev": 9,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 591522,
+      "margin_pct": 25.82,
+      "surplus": 295760,
+      "loser_wasted": 849648,
+      "total_wasted": 1145408
+    },
+    {
+      "state": "Tennessee",
+      "biden": 1143711,
+      "trump": 1852475,
+      "total_ev": 11,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 708764,
+      "margin_pct": 23.66,
+      "surplus": 354381,
+      "loser_wasted": 1143711,
+      "total_wasted": 1498092
+    },
+    {
+      "state": "Arkansas",
+      "biden": 423932,
+      "trump": 760647,
+      "total_ev": 6,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 336715,
+      "margin_pct": 28.42,
+      "surplus": 168356,
+      "loser_wasted": 423932,
+      "total_wasted": 592288
+    },
+    {
+      "state": "Idaho",
+      "biden": 287021,
+      "trump": 554119,
+      "total_ev": 4,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 267098,
+      "margin_pct": 31.75,
+      "surplus": 133548,
+      "loser_wasted": 287021,
+      "total_wasted": 420569
+    },
+    {
+      "state": "Georgia",
+      "biden": 2473633,
+      "trump": 2461854,
+      "total_ev": 16,
+      "biden_ev": 16,
+      "winner": "biden",
+      "margin": 11779,
+      "margin_pct": 0.24,
+      "surplus": 5888,
+      "loser_wasted": 2461854,
+      "total_wasted": 2467742
+    },
+    {
+      "state": "Arizona",
+      "biden": 1672143,
+      "trump": 1661686,
+      "total_ev": 11,
+      "biden_ev": 11,
+      "winner": "biden",
+      "margin": 10457,
+      "margin_pct": 0.31,
+      "surplus": 5227,
+      "loser_wasted": 1661686,
+      "total_wasted": 1666913
+    },
+    {
+      "state": "Wisconsin",
+      "biden": 1630866,
+      "trump": 1610184,
+      "total_ev": 10,
+      "biden_ev": 10,
+      "winner": "biden",
+      "margin": 20682,
+      "margin_pct": 0.64,
+      "surplus": 10340,
+      "loser_wasted": 1610184,
+      "total_wasted": 1620524
+    },
+    {
+      "state": "Pennsylvania",
+      "biden": 3458229,
+      "trump": 3377674,
+      "total_ev": 20,
+      "biden_ev": 20,
+      "winner": "biden",
+      "margin": 80555,
+      "margin_pct": 1.18,
+      "surplus": 40276,
+      "loser_wasted": 3377674,
+      "total_wasted": 3417950
+    },
+    {
+      "state": "Nevada",
+      "biden": 703486,
+      "trump": 669890,
+      "total_ev": 6,
+      "biden_ev": 6,
+      "winner": "biden",
+      "margin": 33596,
+      "margin_pct": 2.45,
+      "surplus": 16797,
+      "loser_wasted": 669890,
+      "total_wasted": 686687
+    },
+    {
+      "state": "Michigan",
+      "biden": 2804040,
+      "trump": 2649852,
+      "total_ev": 16,
+      "biden_ev": 16,
+      "winner": "biden",
+      "margin": 154188,
+      "margin_pct": 2.83,
+      "surplus": 77093,
+      "loser_wasted": 2649852,
+      "total_wasted": 2726945
+    },
+    {
+      "state": "North Carolina",
+      "biden": 2684292,
+      "trump": 2758775,
+      "total_ev": 15,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 74483,
+      "margin_pct": 1.37,
+      "surplus": 37240,
+      "loser_wasted": 2684292,
+      "total_wasted": 2721532
+    },
+    {
+      "state": "Florida",
+      "biden": 5297045,
+      "trump": 5668731,
+      "total_ev": 30,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 371686,
+      "margin_pct": 3.39,
+      "surplus": 185842,
+      "loser_wasted": 5297045,
+      "total_wasted": 5482887
+    },
+    {
+      "state": "Texas",
+      "biden": 5259126,
+      "trump": 5890347,
+      "total_ev": 40,
+      "biden_ev": 0,
+      "winner": "trump",
+      "margin": 631221,
+      "margin_pct": 5.66,
+      "surplus": 315609,
+      "loser_wasted": 5259126,
+      "total_wasted": 5574735
+    }
+  ],
+  "nyc": {
+    "boroughs": [
+      {
+        "name": "Manhattan",
+        "biden": 354504,
+        "trump": 24100
+      },
+      {
+        "name": "Brooklyn",
+        "biden": 564186,
+        "trump": 75204
+      },
+      {
+        "name": "Queens",
+        "biden": 441033,
+        "trump": 116068
+      },
+      {
+        "name": "Bronx",
+        "biden": 250192,
+        "trump": 31130
+      },
+      {
+        "name": "Staten Island",
+        "biden": 70210,
+        "trump": 116580
+      }
+    ],
+    "net_margin": 1317043,
+    "biden_total": 1680125,
+    "trump_total": 363082
+  }
+}

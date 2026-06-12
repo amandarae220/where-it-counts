@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# SvelteKit build artifacts
+.svelte-kit/
+build/
+
+# Raw data downloads — regenerate with data/process_all.py
+data/*.csv
+data/*.tab
+data/bea_rpp_raw.json
+data/census_wfh_raw.json
+data/census_wfh_state.json
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
