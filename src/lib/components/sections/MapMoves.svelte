@@ -66,6 +66,23 @@
     return { party: 'R', label: `R +${Math.abs(s.margin_pct).toFixed(2)} pts` };
   }
 
+  // Competitiveness labels — same vocabulary as the destination Calculator
+  // (Razor thin / Competitive / Shifting) so the piece reads consistently.
+  // State thresholds tuned to the 9-state dataset; county thresholds wider
+  // because a 5-pt county margin is still very much in play.
+  function stateTier(marginPct) {
+    const m = Math.abs(marginPct);
+    if (m < 1)  return { key: 'razor',       label: 'Razor thin'  };
+    if (m < 3)  return { key: 'competitive', label: 'Competitive' };
+    return        { key: 'shifting',    label: 'Shifting'    };
+  }
+  function countyTier(marginPct) {
+    const m = Math.abs(marginPct);
+    if (m < 2)  return { key: 'razor',       label: 'Razor thin'  };
+    if (m < 8)  return { key: 'competitive', label: 'Competitive' };
+    return        { key: 'shifting',    label: 'Shifting'    };
+  }
+
   // ── Reactive: ranked list ──────────────────────────────────────
   $: ranked = [...STATES]
     .map(s => ({
@@ -73,6 +90,7 @@
       score: combinedScore(s, weightPres),
       shiftVotes: votesToShift(s, direction),
       lean: currentLean(s),
+      tier: stateTier(s.margin_pct),
     }))
     .sort((a, b) => b.score - a.score);
 
@@ -191,7 +209,10 @@
           <span class="state-rank mono">{ranked.indexOf(s) + 1}</span>
 
           <span class="state-id">
-            <span class="state-name">{s.name}</span>
+            <span class="state-name-row">
+              <span class="state-name">{s.name}</span>
+              <span class="tier-pill mono tier-{s.tier.key}">{s.tier.label}</span>
+            </span>
             <span class="state-meta mono">
               <span class="lean lean-{s.lean.party}">{s.lean.label}</span>
               <span class="sep">·</span>
@@ -248,6 +269,7 @@
 
                 <div class="county-grid">
                   {#each countyCache[s.code] as c}
+                    {@const ct = countyTier(c.margin_pct)}
                     <div
                       class="county-card"
                       class:hovered={hoveredFips === c.fips}
@@ -264,6 +286,7 @@
                           {c.winner === 'dem' ? 'D' : 'R'} +{c.margin_pct.toFixed(1)}
                         </span>
                       </div>
+                      <span class="tier-pill mono tier-{ct.key} county-tier">{ct.label}</span>
                       <div class="county-stats">
                         <div class="cstat">
                           <span class="cstat-num mono">{fmt(c.total)}</span>
@@ -452,13 +475,34 @@
     font-size: 0.875rem;
     color: #9ca3af;
   }
+  .state-name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex-wrap: wrap;
+  }
   .state-name {
     font-family: var(--font-serif);
     font-size: 1.25rem;
     font-weight: 700;
-    display: block;
     line-height: 1.2;
   }
+
+  /* Competitiveness pills — same vocabulary + palette as Calculator */
+  .tier-pill {
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2em 0.55em;
+    border-radius: 2px;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  .tier-razor       { background: #fef3c7; color: #92400e; }
+  .tier-competitive { background: #dbeafe; color: #1e40af; }
+  .tier-shifting    { background: #f3f4f6; color: #4b5563; }
+  .county-tier { align-self: flex-start; margin-top: -0.25rem; }
   .state-meta {
     font-size: 0.75rem;
     color: var(--color-text-muted);
