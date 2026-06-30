@@ -127,6 +127,26 @@ strong { font-weight: 600; }
   margin-bottom: 0.5rem;
 }
 
+/* Mobile scrollytelling — overlay docks to bottom, map gets more room */
+@media (max-width: 720px) {
+  .scrolly-sticky { height: 100svh; }
+  .step {
+    align-items: flex-end;
+    padding: 30svh 0 8svh;
+  }
+  .step-content {
+    margin: 0 1rem;
+    max-width: calc(100vw - 2rem);
+    padding: 1.125rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+  .step-content p { font-size: 0.9375rem; line-height: 1.55; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 /* ── Section blocks ──────────────────────────────────────────── */
 .section {
   padding: 6rem 0;

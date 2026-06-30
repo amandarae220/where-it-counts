@@ -123,31 +123,36 @@
     <!-- State Races: Even Smaller -->
     <section class="section state-leg">
       <div class="prose">
-        <h2>State Races: Even Smaller</h2>
+        <p class="eyebrow mono">Zoom out further</p>
+        <h2>State races are decided by even fewer people.</h2>
         <div class="divider"></div>
-        <p>
-          Presidential margins get the headlines. State legislative races are
-          where the floors actually move.
+        <p class="state-lede">
+          Presidential margins get the headlines. State legislative seats are
+          where the floors actually move — and they turn on numbers small
+          enough to fit in a single apartment building.
         </p>
         <div class="leg-stats">
           <div class="leg-stat">
-            <span class="stat text-dem">280</span>
-            <span class="stat-label">votes — GA House District 35, 2020</span>
+            <span class="leg-num mono text-comp">139</span>
+            <span class="leg-meta">votes decided</span>
+            <span class="leg-where mono">WI Assembly · District 73 · 2020</span>
           </div>
           <div class="leg-stat">
-            <span class="stat text-comp">139</span>
-            <span class="stat-label">votes — WI Assembly District 73, 2020</span>
+            <span class="leg-num mono text-dem">280</span>
+            <span class="leg-meta">votes decided</span>
+            <span class="leg-where mono">GA House · District 35 · 2020</span>
           </div>
           <div class="leg-stat">
-            <span class="stat" style="color:#6b7280;">582</span>
-            <span class="stat-label">votes — WI State Senate District 32, 2020</span>
+            <span class="leg-num mono">582</span>
+            <span class="leg-meta">votes decided</span>
+            <span class="leg-where mono">WI State Senate · District 32 · 2020</span>
           </div>
         </div>
-        <p>
-          These are the people who draw the maps, set your school curriculum,
+        <p class="state-tail">
+          These are the people who draw the maps, set school curricula,
           decide healthcare access, and control what goes on your ballot.
-          7 Georgia House districts were decided by fewer than 1,000 votes.
-          26 Wisconsin Assembly districts by fewer than 5,000.
+          Seven Georgia House districts were decided by fewer than 1,000 votes.
+          Twenty-six Wisconsin Assembly districts by fewer than 5,000.
         </p>
       </div>
     </section>
@@ -338,17 +343,55 @@
 
   /* ── State leg ─────────────────────────────────────────────── */
   .state-leg {
-    padding: 6rem 0;
-    background: #f9fafb;
+    padding: 7rem 0;
+    background: var(--color-bg-dark);
+    color: var(--color-text-light);
+  }
+  .state-leg h2 { color: var(--color-text-light); max-width: 720px; }
+  .state-leg .divider { background: #1f2937; }
+  .state-lede,
+  .state-tail {
+    color: #9ca3af;
+    font-size: 1.0625rem;
+    line-height: 1.65;
   }
   .leg-stats {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin: 2.5rem 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin: 3rem 0;
   }
-  .leg-stat { display: flex; flex-direction: column; }
-  .leg-stat .stat { font-size: clamp(2rem, 5vw, 3rem); }
+  .leg-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.75rem 1.5rem;
+    border: 1px solid #1f2937;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.015);
+  }
+  .leg-num {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+  .leg-meta {
+    font-size: 0.8125rem;
+    color: #9ca3af;
+    margin-top: 0.25rem;
+  }
+  .leg-where {
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #4b5563;
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 780px) {
+    .leg-stats { grid-template-columns: 1fr; gap: 1rem; }
+  }
 
   /* ── Bridge CTA ────────────────────────────────────────────── */
   .bridge {

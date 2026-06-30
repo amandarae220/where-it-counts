@@ -35,22 +35,15 @@
 
   <hr class="stat-rule" aria-hidden="true" />
 
-  <!-- 9 blue states vs 3 swing states -->
+  <!-- 9 blue states vs 3 swing states — 146× as the dominant number -->
   <div class="versus-block">
-    <div class="versus-side">
-      <span class="versus-number mono dem">6.3M</span>
-      <span class="versus-label">surplus votes<br/>across 9 safe blue states</span>
-    </div>
-
-    <div class="versus-middle" aria-hidden="true">
-      <span class="versus-x mono">146×</span>
-      <span class="versus-descriptor">larger</span>
-    </div>
-
-    <div class="versus-side right">
-      <span class="versus-number mono comp">43K</span>
-      <span class="versus-label">combined margin<br/>GA + AZ + WI</span>
-    </div>
+    <span class="versus-x mono">146<span class="versus-x-symbol">×</span></span>
+    <p class="versus-caption">
+      The surplus across nine safe blue states
+      <span class="versus-pill dem">6.3M votes</span>
+      was 146 times the combined margin that decided
+      <span class="versus-pill comp">GA + AZ + WI: 43K votes</span>
+    </p>
   </div>
 
   <p class="footnote mono">
@@ -183,58 +176,48 @@
     margin: 0 auto 4rem;
   }
 
-  /* ── Versus block ───────────────────────────────────── */
+  /* ── Versus block — 146× hero ──────────────────────── */
   .versus-block {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    max-width: 700px;
+    gap: 1.25rem;
+    max-width: 640px;
     margin: 0 auto 2rem;
-    flex-wrap: wrap;
-  }
-
-  .versus-side {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    min-width: 160px;
-  }
-  .versus-side.right { align-items: flex-start; }
-
-  .versus-number {
-    font-size: clamp(2.5rem, 7vw, 4rem);
-    font-weight: 500;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
-  .versus-label {
-    font-size: 0.8125rem;
-    color: #6b7280;
-    line-height: 1.45;
-    text-align: left;
-  }
-
-  .versus-middle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0 0.5rem;
+    text-align: center;
   }
   .versus-x {
-    font-size: clamp(1.75rem, 5vw, 2.75rem);
-    color: #fff;
+    display: block;
+    font-size: clamp(5rem, 18vw, 10rem);
     font-weight: 500;
-    letter-spacing: -0.02em;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: #fff;
   }
-  .versus-descriptor {
-    font-size: 0.75rem;
-    color: #4b5563;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+  .versus-x-symbol {
+    font-size: 0.45em;
+    color: var(--color-competitive);
+    vertical-align: super;
   }
+  .versus-caption {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    color: #9ca3af;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 520px;
+  }
+  .versus-pill {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.15em 0.5em;
+    border-radius: 3px;
+    white-space: nowrap;
+    margin: 0 0.1em;
+  }
+  .versus-pill.dem  { color: #93c5fd; border-color: rgba(37, 99, 235, 0.35); }
+  .versus-pill.comp { color: #fcd34d; border-color: rgba(217, 119, 6, 0.35); }
 
   /* ── Footnote ───────────────────────────────────────── */
   .footnote {
@@ -247,9 +230,9 @@
 
   /* ── Responsive ─────────────────────────────────────── */
   @media (max-width: 600px) {
-    .comparison { flex-direction: column; align-items: stretch; }
+    .stat-breaker { padding: 4rem 1.25rem; }
+    .comparison { flex-direction: column; align-items: stretch; gap: 0.75rem; }
     .comparison-divider { align-self: flex-start; padding-top: 0; }
-    .versus-block { flex-direction: column; align-items: flex-start; }
-    .versus-side.right { align-items: flex-start; }
+    .versus-pill { display: inline-block; margin: 0.2em 0; }
   }
 </style>
