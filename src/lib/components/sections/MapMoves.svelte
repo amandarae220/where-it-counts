@@ -1,5 +1,6 @@
 <script>
   import { flip } from 'svelte/animate';
+  import StateMiniMap from '$lib/components/viz/StateMiniMap.svelte';
 
   // ── Where the map could move ────────────────────────────────────
   // Interactive: 9 swing states, two-level drill-down.
@@ -30,6 +31,7 @@
   let weightPres = 60;        // 0–100 — presidential weight in combined score
   let expandedCode = null;    // state code currently drilled into
   let countyCache = {};       // stateCode → top counties
+  let hoveredFips = null;     // county fips highlighted from card hover
 
   // ── Scoring ────────────────────────────────────────────────────
   // Both leverage axes are normalized to 0–100 against the most-leveraged
@@ -226,36 +228,60 @@
             {:else}
               <p class="drill-intro">
                 Top counties in {s.name} ranked by leverage per mover —
-                largest electorates × closest current margins. The "votes
-                to flip" column shows the net shift a single county would
-                need to swing toward {direction === 'D' ? 'Democratic' : 'Republican'}.
+                largest electorates × closest current margins. Hover a
+                card to see where the county sits in the state. The
+                "votes to flip" column shows the net shift it would need
+                to swing toward {direction === 'D' ? 'Democratic' : 'Republican'}.
               </p>
-              <div class="county-grid">
-                {#each countyCache[s.code] as c}
-                  <div class="county-card">
-                    <div class="county-head">
-                      <span class="county-name">{c.county}</span>
-                      <span class="county-lean lean-{c.winner === 'dem' ? 'D' : 'R'} mono">
-                        {c.winner === 'dem' ? 'D' : 'R'} +{c.margin_pct.toFixed(1)}
-                      </span>
-                    </div>
-                    <div class="county-stats">
-                      <div class="cstat">
-                        <span class="cstat-num mono">{fmt(c.total)}</span>
-                        <span class="cstat-label">2020 votes cast</span>
+              <div class="drill-layout">
+                <div class="drill-map">
+                  <StateMiniMap
+                    stateCode={s.code}
+                    highlightFips={countyCache[s.code].map(c => c.fips)}
+                    {hoveredFips}
+                  />
+                  <p class="drill-map-key mono">
+                    <span class="key-dot" aria-hidden="true"></span>
+                    Top {countyCache[s.code].length} counties by leverage
+                  </p>
+                </div>
+
+                <div class="county-grid">
+                  {#each countyCache[s.code] as c}
+                    <div
+                      class="county-card"
+                      class:hovered={hoveredFips === c.fips}
+                      on:mouseenter={() => hoveredFips = c.fips}
+                      on:mouseleave={() => hoveredFips = null}
+                      on:focusin={() => hoveredFips = c.fips}
+                      on:focusout={() => hoveredFips = null}
+                      role="group"
+                      tabindex="0"
+                    >
+                      <div class="county-head">
+                        <span class="county-name">{c.county}</span>
+                        <span class="county-lean lean-{c.winner === 'dem' ? 'D' : 'R'} mono">
+                          {c.winner === 'dem' ? 'D' : 'R'} +{c.margin_pct.toFixed(1)}
+                        </span>
                       </div>
-                      <div class="cstat">
-                        {#if c.need > 0}
-                          <span class="cstat-num mono cstat-need">{fmt(c.need)}</span>
-                          <span class="cstat-label">to flip {direction}</span>
-                        {:else}
-                          <span class="cstat-num mono cstat-already">already {direction}</span>
-                          <span class="cstat-label">expand the cushion</span>
-                        {/if}
+                      <div class="county-stats">
+                        <div class="cstat">
+                          <span class="cstat-num mono">{fmt(c.total)}</span>
+                          <span class="cstat-label">2020 votes cast</span>
+                        </div>
+                        <div class="cstat">
+                          {#if c.need > 0}
+                            <span class="cstat-num mono cstat-need">{fmt(c.need)}</span>
+                            <span class="cstat-label">to flip {direction}</span>
+                          {:else}
+                            <span class="cstat-num mono cstat-already">already {direction}</span>
+                            <span class="cstat-label">expand the cushion</span>
+                          {/if}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                {/each}
+                  {/each}
+                </div>
               </div>
             {/if}
           </div>
@@ -527,6 +553,37 @@
     margin: 1rem 0 1.25rem;
     max-width: 720px;
   }
+  .drill-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .drill-map {
+    position: sticky;
+    top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .drill-map-key {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  .key-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    background: var(--color-competitive);
+    opacity: 0.55;
+  }
+
   .county-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -540,6 +597,19 @@
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
+    cursor: default;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  }
+  .county-card:hover,
+  .county-card.hovered,
+  .county-card:focus-within {
+    border-color: var(--color-competitive);
+    background: #fff;
+    transform: translateY(-1px);
+  }
+  .county-card:focus-visible {
+    outline: 2px solid var(--color-competitive);
+    outline-offset: 2px;
   }
   .county-head {
     display: flex;
@@ -595,6 +665,8 @@
   @media (max-width: 820px) {
     .map-moves { padding: 4rem 1rem; }
     .controls { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.25rem; }
+    .drill-layout { grid-template-columns: 1fr; gap: 1rem; }
+    .drill-map { position: static; max-width: 360px; margin: 0 auto; }
     .state-head {
       grid-template-columns: 1.5rem 1fr 1.25rem;
       grid-template-areas:
