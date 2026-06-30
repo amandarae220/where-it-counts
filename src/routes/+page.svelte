@@ -2,6 +2,7 @@
   import StatBreaker   from '$lib/components/sections/StatBreaker.svelte';
   import Scrollytelling   from '$lib/components/Scrollytelling.svelte';
   import SurplusMapViz    from '$lib/components/viz/SurplusMapViz.svelte';
+  import MapMoves         from '$lib/components/sections/MapMoves.svelte';
 
   const surplusSteps = [
     {
@@ -158,15 +159,19 @@
     </section>
   </div>
 
-  <!-- Bridge CTA -->
+  <!-- Interactive: how the map could move -->
+  <MapMoves />
+
+  <!-- Bridge CTA — deeper case + destination calculator -->
   <section class="bridge">
     <div class="prose">
-      <p class="bridge-hed">That's the problem. Here's the opportunity.</p>
+      <p class="bridge-hed">Want the full case and the destination calculator?</p>
       <p class="bridge-sub">
-        The same math that explains why your vote doesn't move the needle
-        where you live also points to exactly where it would.
+        How the lines got drawn, why candidates already move strategically,
+        what's coming in 2031, and a metro-by-metro ranking factoring cost
+        of living and remote-work eligibility.
       </p>
-      <a href="/the-case" class="cta">See where your vote would count <span aria-hidden="true">→</span></a>
+      <a href="/the-case" class="cta">Read the full case <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
