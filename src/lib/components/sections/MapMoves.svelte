@@ -2,6 +2,7 @@
   import { flip } from 'svelte/animate';
   import StateMiniMap from '$lib/components/viz/StateMiniMap.svelte';
   import { SWING_STATES as STATES } from '$lib/data/swingStates.js';
+  import { stateTier, countyTier } from '$lib/data/simulation.js';
   import { direction } from '$lib/stores/direction.js';
 
   // ── Where the map could move ────────────────────────────────────
@@ -57,22 +58,8 @@
     return { party: 'R', label: `R +${Math.abs(s.margin_pct).toFixed(2)} pts` };
   }
 
-  // Competitiveness labels — same vocabulary as the destination Calculator
-  // (Razor thin / Competitive / Shifting) so the piece reads consistently.
-  // State thresholds tuned to the 9-state dataset; county thresholds wider
-  // because a 5-pt county margin is still very much in play.
-  function stateTier(marginPct) {
-    const m = Math.abs(marginPct);
-    if (m < 1)  return { key: 'razor',       label: 'Razor thin'  };
-    if (m < 3)  return { key: 'competitive', label: 'Competitive' };
-    return        { key: 'shifting',    label: 'Shifting'    };
-  }
-  function countyTier(marginPct) {
-    const m = Math.abs(marginPct);
-    if (m < 2)  return { key: 'razor',       label: 'Razor thin'  };
-    if (m < 8)  return { key: 'competitive', label: 'Competitive' };
-    return        { key: 'shifting',    label: 'Shifting'    };
-  }
+  // stateTier + countyTier live in $lib/data/simulation.js — same
+  // vocabulary and thresholds shared with MoversBudget.
 
   // ── Reactive: ranked list ──────────────────────────────────────
   $: ranked = [...STATES]

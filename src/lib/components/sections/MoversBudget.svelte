@@ -13,6 +13,7 @@
     BASELINE_R_EV,
     REFERENCES,
   } from '$lib/data/swingStates.js';
+  import { simulate, stateTier } from '$lib/data/simulation.js';
   import AllocationMap from '$lib/components/viz/AllocationMap.svelte';
   import { direction } from '$lib/stores/direction.js';
 
@@ -31,31 +32,8 @@
   $: overBudget = allocatedTotal > budget;
   $: budgetUsePct = budget === 0 ? 0 : Math.min(100, Math.round((allocatedTotal / budget) * 100));
 
-  // ── Simulation model ───────────────────────────────────────────
-  // Same math the (now-removed) MapMoves sensitivity panel used:
-  // shift margin_votes by movers in the chosen direction, then
-  // recompute margin_pct proportionally.
-  function simulate(state, dir, movers) {
-    const netChange = dir === 'D' ? movers : -movers;
-    const newMargin = state.margin_votes + netChange;
-    const pctPerVote = state.margin_pct / state.margin_votes;
-    const newPct = newMargin * pctPerVote;
-    const newParty = newMargin > 0 ? 'D' : 'R';
-    const origParty = state.margin_votes > 0 ? 'D' : 'R';
-    return {
-      newMargin,
-      newPct,
-      newParty,
-      origParty,
-      flipped: newParty !== origParty,
-    };
-  }
-  function stateTier(pct) {
-    const m = Math.abs(pct);
-    if (m < 1)  return { key: 'razor',       label: 'Razor thin'  };
-    if (m < 3)  return { key: 'competitive', label: 'Competitive' };
-    return        { key: 'shifting',    label: 'Shifting'    };
-  }
+  // Simulation math + tier classifiers live in $lib/data/simulation.js
+  // so both this tool and MapMoves invoke the same functions.
 
   // ── Derived: per-state results + aggregate EC ──────────────────
   $: simResults = SWING_STATES.map(s => ({
