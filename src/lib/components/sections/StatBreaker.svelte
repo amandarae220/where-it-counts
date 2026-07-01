@@ -28,8 +28,9 @@
   <div class="multiplier-block">
     <span class="multiplier-number mono">216<span class="multiplier-x">×</span></span>
     <p class="multiplier-caption">
-      California's surplus alone could have flipped Georgia
-      two hundred and sixteen times over.
+      California's surplus was 216 times Georgia's decisive margin.
+      Those votes couldn't cross state lines — that's precisely what
+      makes geography so important.
     </p>
   </div>
 
@@ -39,10 +40,12 @@
   <div class="versus-block">
     <span class="versus-x mono">146<span class="versus-x-symbol">×</span></span>
     <p class="versus-caption">
-      The surplus across nine safe blue states
-      <span class="versus-pill dem">6.3M votes</span>
-      was 146 times the combined margin that decided
-      <span class="versus-pill comp">GA + AZ + WI: 43K votes</span>
+      The surplus across nine safe blue states —
+      <span class="versus-pill dem">6.3M votes</span> —
+      was 146 times the margin that decided
+      <span class="versus-pill comp">GA + AZ + WI: 43K votes</span>.
+      Despite this difference, we ended up with
+      43,000 votes in charge of the presidency.
     </p>
   </div>
 

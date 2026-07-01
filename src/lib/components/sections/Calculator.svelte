@@ -231,8 +231,12 @@
     <p class="eyebrow mono">What would it mean for you?</p>
     <h2>Run your own numbers</h2>
     <p>
-      Where are you now? What do you do for work? What can you spend on rent?
-      Adjust the levers and see what the data shows — financially and civically.
+      The same clustering that produces the surplus-vote pattern also
+      produces the cost-of-living pattern: NYC median rent is $3,406/mo;
+      Columbus is $1,515. That's roughly $23,000 a year. Nine metros
+      below sit at the intersection of measurably competitive politics
+      and materially lower cost of living. Set your origin, your work
+      type, and your budget — the tool ranks them for you.
     </p>
   </div>
 
