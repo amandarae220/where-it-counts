@@ -1,6 +1,7 @@
 <script>
   import { flip } from 'svelte/animate';
   import StateMiniMap from '$lib/components/viz/StateMiniMap.svelte';
+  import { SWING_STATES as STATES } from '$lib/data/swingStates.js';
 
   // ── Where the map could move ────────────────────────────────────
   // Interactive: 9 swing states, two-level drill-down.
@@ -8,23 +9,10 @@
   // Level 2: counties within the chosen state, ranked by leverage per mover.
   // Safe-state buffer is fixed at ±5 pts — every state currently >5pts in
   // either column stays in that column under any move shown here.
-
-  // ── Curated state dataset ──────────────────────────────────────
-  // Sources: MIT Election Lab (2020 pres) · Ballotpedia + OpenElections
-  // (state-leg margins) · Census 2020 reapportionment (EV counts in effect
-  // from 2024 onward — the relevant cycle for any move planned before 2031).
-  // margin_votes: positive = Dem won by this many; negative = GOP won.
-  const STATES = [
-    { code: 'GA', name: 'Georgia',        ev: 16, margin_votes:   11779, margin_pct:  0.24, comp_leg: 9,  total_leg: 236 },
-    { code: 'AZ', name: 'Arizona',        ev: 11, margin_votes:   10457, margin_pct:  0.31, comp_leg: 7,  total_leg:  90 },
-    { code: 'WI', name: 'Wisconsin',      ev: 10, margin_votes:   20682, margin_pct:  0.63, comp_leg: 10, total_leg: 132 },
-    { code: 'PA', name: 'Pennsylvania',   ev: 19, margin_votes:   80555, margin_pct:  1.17, comp_leg: 12, total_leg: 253 },
-    { code: 'MI', name: 'Michigan',       ev: 15, margin_votes:  154188, margin_pct:  2.78, comp_leg: 8,  total_leg: 148 },
-    { code: 'NC', name: 'North Carolina', ev: 16, margin_votes:  -74481, margin_pct: -1.34, comp_leg: 6,  total_leg: 170 },
-    { code: 'NV', name: 'Nevada',         ev:  6, margin_votes:   33596, margin_pct:  2.39, comp_leg: 4,  total_leg:  63 },
-    { code: 'FL', name: 'Florida',        ev: 30, margin_votes: -371686, margin_pct: -3.36, comp_leg: 8,  total_leg: 160 },
-    { code: 'TX', name: 'Texas',          ev: 40, margin_votes: -631221, margin_pct: -5.58, comp_leg: 14, total_leg: 181 },
-  ];
+  //
+  // The "what happens if you actually move people" sensitivity model
+  // lives in a separate component (MoversBudget) so each tool does one
+  // job cleanly.
 
   // ── Controls ───────────────────────────────────────────────────
   let direction = 'D';        // 'D' = shift toward Democratic, 'R' = toward Republican
@@ -32,7 +20,6 @@
   let expandedCode = null;    // state code currently drilled into
   let countyCache = {};       // stateCode → top counties
   let hoveredFips = null;     // county fips highlighted from card hover
-  let shifts = {};            // stateCode → thousands of net-new movers (sensitivity slider)
 
   // ── Scoring ────────────────────────────────────────────────────
   // Both leverage axes are normalized to 0–100 against the most-leveraged
@@ -84,32 +71,6 @@
     return        { key: 'shifting',    label: 'Shifting'    };
   }
 
-  // ── Sensitivity model ──────────────────────────────────────────
-  // Simulate N thousand net-new movers into a state, toward the
-  // chosen direction. Preserves the state's vote-to-pct ratio from
-  // the 2020 baseline; drifts slightly at extreme shifts because the
-  // new voters change the electorate size, acceptable at MVP scale.
-  function simulate(s, dir, shiftK) {
-    const shiftVotes = shiftK * 1000;
-    const netChange = dir === 'D' ? shiftVotes : -shiftVotes;
-    const newMargin = s.margin_votes + netChange;
-    const pctPerVote = s.margin_pct / s.margin_votes;
-    const newPct = newMargin * pctPerVote;
-    return {
-      newMargin,
-      newPct,
-      newTier: stateTier(newPct),
-      newParty: newPct > 0 ? 'D' : 'R',
-      flipped: Math.sign(newMargin) !== Math.sign(s.margin_votes),
-    };
-  }
-  // Slider max: 2× the state's current margin, capped at 500K movers
-  // (a realistic upper bound for a 4-year civic relocation campaign),
-  // floored at 20K so even razor-thin states have slider granularity.
-  function shiftMax(s) {
-    return Math.max(20, Math.min(500, Math.ceil(Math.abs(s.margin_votes) * 2 / 1000)));
-  }
-
   // ── Reactive: ranked list ──────────────────────────────────────
   $: ranked = [...STATES]
     .map(s => ({
@@ -148,7 +109,6 @@
       expandedCode = null;
     } else {
       expandedCode = code;
-      if (shifts[code] === undefined) shifts[code] = 0;
       loadCounties(code);
     }
   }
@@ -198,6 +158,10 @@
           on:click={() => direction = 'R'}
         >Republican</button>
       </div>
+      <p class="toggle-hint mono">
+        Rankings stay the same — closeness is symmetric.
+        Direction sets what the flip and sensitivity numbers mean.
+      </p>
     </div>
 
     <div class="control-group">
@@ -275,61 +239,6 @@
             {#if !countyCache[s.code]}
               <p class="loading mono">Loading counties…</p>
             {:else}
-              {@const shiftK = shifts[s.code] || 0}
-              {@const sim = simulate(s, direction, shiftK)}
-              {@const smax = shiftMax(s)}
-
-              <!-- Sensitivity panel — model the piece's own remedy -->
-              <div class="sim-panel" aria-label="Relocation sensitivity for {s.name}">
-                <div class="sim-header">
-                  <span class="mono sim-label">What if</span>
-                  <span class="sim-subtitle">
-                    Simulate net-new movers into {s.name} voting
-                    <span class="sim-dir">{direction === 'D' ? 'Democratic' : 'Republican'}</span>.
-                    Watch how the margin shifts.
-                  </span>
-                </div>
-
-                <div class="sim-slider-wrap">
-                  <input
-                    type="range"
-                    min="0"
-                    max={smax}
-                    step="1"
-                    bind:value={shifts[s.code]}
-                    class="sim-slider"
-                    aria-valuetext="{fmt(shiftK * 1000)} movers"
-                  />
-                  <div class="sim-scale mono">
-                    <span>0</span>
-                    <span class="sim-current">{fmt(shiftK * 1000)} movers</span>
-                    <span>{fmt(smax * 1000)}</span>
-                  </div>
-                </div>
-
-                <div class="sim-readout">
-                  <div class="sim-col">
-                    <span class="sim-col-label mono">2020 result</span>
-                    <span class="sim-value lean-{s.lean.party} mono">{s.lean.label}</span>
-                    <span class="tier-pill mono tier-{s.tier.key}">{s.tier.label}</span>
-                  </div>
-                  <div class="sim-arrow mono" aria-hidden="true">→</div>
-                  <div class="sim-col">
-                    <span class="sim-col-label mono">Projected</span>
-                    <span class="sim-value lean-{sim.newParty} mono">
-                      {sim.newParty} +{Math.abs(sim.newPct).toFixed(2)} pts
-                    </span>
-                    <span class="tier-pill mono tier-{sim.newTier.key}">{sim.newTier.label}</span>
-                  </div>
-                </div>
-
-                {#if sim.flipped}
-                  <div class="sim-flipped mono" role="status">
-                    ✓ Flipped — {s.name} projects to {sim.newParty === 'D' ? 'Democratic' : 'Republican'}
-                  </div>
-                {/if}
-              </div>
-
               <p class="drill-intro">
                 Top counties in {s.name} ranked by leverage per mover —
                 largest electorates × closest current margins. Hover a
@@ -397,7 +306,15 @@
   </ol>
 
   <p class="method mono">
-    Method: presidential leverage scaled by closeness of 2020 margin;
+    <span class="method-label">Method in plain English:</span>
+    counties where more people voted <em>and</em> the 2020 margin was
+    closer score higher — those are the places where a single mover
+    changes the largest amount of political math per person. States
+    are scored the same way, with a boost for how many of that state's
+    legislative seats are currently competitive.
+  </p>
+  <p class="method mono method-formal">
+    Formal: presidential leverage scaled by closeness of 2020 margin;
     state-leg leverage scaled by share of chamber seats currently within
     5 points. Combined per the weight slider above. County leverage =
     total votes cast ÷ (1 + |margin %|). Sources: MIT Election Lab ·
@@ -473,6 +390,14 @@
   .toggle-btn.active { background: #fff; color: var(--color-text); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
   .toggle-btn:focus-visible { outline: 2px solid var(--color-competitive); outline-offset: 2px; }
 
+  .toggle-hint {
+    margin: 0;
+    font-size: 0.6875rem;
+    color: #9ca3af;
+    line-height: 1.5;
+    max-width: 280px;
+  }
+
   .slider-row {
     display: flex;
     align-items: center;
@@ -481,6 +406,53 @@
   .slider-row input[type=range] {
     flex: 1;
     accent-color: var(--color-competitive);
+  }
+
+  /* Consistent slider thumb size across the piece (matches MoversBudget).
+     22px thumb reads well on touch without dominating desktop. */
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-competitive);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    cursor: pointer;
+    margin-top: -9px;
+    transition: transform 0.12s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover  { transform: scale(1.12); }
+  input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
+  input[type=range]::-moz-range-track {
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-competitive);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    cursor: pointer;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    input[type=range]::-webkit-slider-thumb { transition: none; }
+    input[type=range]::-webkit-slider-thumb:hover,
+    input[type=range]::-webkit-slider-thumb:active { transform: none; }
   }
   .slider-end {
     font-size: 0.6875rem;
@@ -669,120 +641,6 @@
     border-top: 1px solid #f3f4f6;
   }
 
-  /* ── Sensitivity panel ────────────────────────────────────── */
-  .sim-panel {
-    background: #fff;
-    border: 2px solid var(--color-competitive);
-    border-radius: 3px;
-    padding: 1.5rem;
-    margin: 1.25rem 0 1.75rem;
-  }
-  .sim-header {
-    display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.25rem;
-  }
-  .sim-label {
-    font-size: 0.6875rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--color-competitive);
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-  .sim-subtitle {
-    font-size: 0.9375rem;
-    color: var(--color-text-muted);
-    line-height: 1.55;
-  }
-  .sim-dir { font-weight: 600; color: var(--color-text); }
-
-  .sim-slider-wrap { margin-bottom: 1.25rem; }
-  .sim-slider {
-    width: 100%;
-    accent-color: var(--color-competitive);
-    height: 4px;
-  }
-  .sim-scale {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.6875rem;
-    color: #9ca3af;
-    margin-top: 0.625rem;
-  }
-  .sim-current {
-    color: var(--color-text);
-    font-size: 0.9375rem;
-    font-weight: 500;
-    padding: 0.15em 0.6em;
-    background: rgba(217, 119, 6, 0.08);
-    border-radius: 2px;
-  }
-
-  .sim-readout {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 1.25rem;
-    padding: 1.125rem 1.25rem;
-    background: #fafaf8;
-    border-radius: 3px;
-  }
-  .sim-col {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: flex-start;
-  }
-  .sim-col-label {
-    font-size: 0.625rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-  }
-  .sim-value {
-    display: inline-block;
-    font-size: 1.125rem;
-    font-weight: 500;
-    padding: 0.25em 0.55em;
-    border-radius: 2px;
-    letter-spacing: -0.01em;
-    transition: background 0.2s, color 0.2s;
-  }
-  .sim-value.lean-D { background: rgba(37, 99, 235, 0.1);  color: #1d4ed8; }
-  .sim-value.lean-R { background: rgba(220, 38, 38, 0.1);  color: #b91c1c; }
-
-  .sim-arrow {
-    font-size: 1.5rem;
-    color: var(--color-competitive);
-    align-self: center;
-  }
-  .sim-flipped {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
-    background: #ecfdf5;
-    color: #047857;
-    border: 1px solid #a7f3d0;
-    border-radius: 3px;
-    font-size: 0.875rem;
-    letter-spacing: 0.02em;
-    text-align: center;
-    font-weight: 600;
-  }
-
-  @media (max-width: 620px) {
-    .sim-readout {
-      grid-template-columns: 1fr;
-      gap: 0.875rem;
-    }
-    .sim-arrow {
-      transform: rotate(90deg);
-      justify-self: center;
-    }
-  }
   .loading {
     font-size: 0.8125rem;
     color: var(--color-text-muted);
@@ -897,10 +755,23 @@
   /* ── Method footnote ──────────────────────────────────────── */
   .method {
     max-width: var(--max-wide);
-    margin: 3rem auto 0;
+    margin: 2rem auto 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+  .method-label {
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+  .method em { font-style: italic; color: var(--color-text); font-weight: 500; }
+  .method-formal {
     font-size: 0.75rem;
     color: #9ca3af;
-    line-height: 1.6;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f3f4f6;
   }
 
   /* ── Mobile ───────────────────────────────────────────────── */

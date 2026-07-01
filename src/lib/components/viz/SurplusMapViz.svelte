@@ -306,6 +306,10 @@
 </script>
 
 <div class="viz-wrap" bind:this={container}>
+  <div class="hover-hint mono" class:hidden={tooltip.visible} aria-hidden="true">
+    <span class="hover-hint-dot"></span>
+    Hover any county for margin, surplus, and raw vote counts
+  </div>
   {#if tooltip.visible && tooltip.data}
     <div
       class="tt"
@@ -340,6 +344,45 @@
     width: 100%;
     height: 100%;
     position: relative;
+  }
+
+  /* Discoverability hint — the tooltips work but they're invisible
+     until first hover. This tells the reader they exist. */
+  .hover-hint {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: #d1d5db;
+    background: rgba(15, 15, 14, 0.75);
+    border: 1px solid #374151;
+    border-radius: 3px;
+    padding: 0.5rem 0.75rem;
+    z-index: 5;
+    backdrop-filter: blur(4px);
+    transition: opacity 0.25s;
+  }
+  .hover-hint.hidden { opacity: 0; pointer-events: none; }
+  .hover-hint-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-competitive);
+    animation: hint-pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes hint-pulse {
+    0%, 100% { opacity: 0.5; }
+    50%      { opacity: 1;   }
+  }
+  @media (max-width: 720px) {
+    .hover-hint { display: none; } /* Touch devices can't hover anyway */
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hover-hint-dot { animation: none; }
   }
 
   /* ── Tooltip ──────────────────────────────────────────────── */
