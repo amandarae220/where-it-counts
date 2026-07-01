@@ -14,10 +14,13 @@
     REFERENCES,
   } from '$lib/data/swingStates.js';
   import AllocationMap from '$lib/components/viz/AllocationMap.svelte';
+  import { direction } from '$lib/stores/direction.js';
 
   // ── Controls ───────────────────────────────────────────────────
+  // `direction` is a shared store — see $lib/stores/direction.js.
+  // Toggling here also updates MapMoves' direction, so scrolling
+  // between the two tools preserves the reader's chosen framing.
   let budgetPct = 5;        // % of US annual interstate flow
-  let direction = 'D';      // 'D' or 'R'
   let allocations = {};     // stateCode → absolute movers assigned
 
   // ── Derived: budget + meter math ───────────────────────────────
@@ -58,7 +61,7 @@
   $: simResults = SWING_STATES.map(s => ({
     ...s,
     movers: allocations[s.code] || 0,
-    ...simulate(s, direction, allocations[s.code] || 0),
+    ...simulate(s, $direction, allocations[s.code] || 0),
   }));
   $: flippedStates = simResults.filter(r => r.flipped);
   $: ecShift = flippedStates.reduce((acc, r) => {
@@ -139,15 +142,15 @@
       <div class="toggle" role="radiogroup" aria-label="Allocation direction">
         <button
           class="toggle-btn"
-          class:active={direction === 'D'}
-          aria-pressed={direction === 'D'}
-          on:click={() => direction = 'D'}
+          class:active={$direction === 'D'}
+          aria-pressed={$direction === 'D'}
+          on:click={() => $direction = 'D'}
         >Democratic</button>
         <button
           class="toggle-btn"
-          class:active={direction === 'R'}
-          aria-pressed={direction === 'R'}
-          on:click={() => direction = 'R'}
+          class:active={$direction === 'R'}
+          aria-pressed={$direction === 'R'}
+          on:click={() => $direction = 'R'}
         >Republican</button>
       </div>
       <p class="toggle-hint mono">
