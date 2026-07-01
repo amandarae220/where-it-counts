@@ -2,6 +2,12 @@
 
   <p class="eyebrow mono">What the data actually shows</p>
 
+  <p class="orient">
+    <span class="orient-term">"Surplus votes"</span> means votes cast
+    for a winner beyond what the winner needed. They counted. They
+    didn't decide anything.
+  </p>
+
   <!-- Scale comparison: CA surplus vs GA margin -->
   <div class="comparison">
     <div class="comparison-col surplus-col">
@@ -69,7 +75,25 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: #6b7280;
-    margin-bottom: 4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Cold-reader lede — one definitional beat before the numbers land */
+  .orient {
+    max-width: 560px;
+    margin: 0 auto 4rem;
+    font-size: clamp(1rem, 2vw, 1.125rem);
+    color: #9ca3af;
+    line-height: 1.65;
+    text-align: left;
+  }
+  .orient-term {
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    padding: 0.1em 0.4em;
+    background: rgba(217, 119, 6, 0.15);
+    border-radius: 2px;
   }
 
   /* ── Scale comparison ──────────────────────────────── */

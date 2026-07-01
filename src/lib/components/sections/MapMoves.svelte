@@ -198,6 +198,10 @@
           on:click={() => direction = 'R'}
         >Republican</button>
       </div>
+      <p class="toggle-hint mono">
+        Rankings stay the same — closeness is symmetric.
+        Direction sets what the flip and sensitivity numbers mean.
+      </p>
     </div>
 
     <div class="control-group">
@@ -278,6 +282,12 @@
               {@const shiftK = shifts[s.code] || 0}
               {@const sim = simulate(s, direction, shiftK)}
               {@const smax = shiftMax(s)}
+              {@const axisMin = -8}
+              {@const axisMax = 8}
+              {@const axisPos = (pct) => Math.max(0, Math.min(100, ((pct - axisMin) / (axisMax - axisMin)) * 100))}
+              {@const baselinePos = axisPos(s.margin_pct)}
+              {@const projPos = axisPos(sim.newPct)}
+              {@const projOffscale = sim.newPct < axisMin || sim.newPct > axisMax}
 
               <!-- Sensitivity panel — model the piece's own remedy -->
               <div class="sim-panel" aria-label="Relocation sensitivity for {s.name}">
@@ -288,6 +298,37 @@
                     <span class="sim-dir">{direction === 'D' ? 'Democratic' : 'Republican'}</span>.
                     Watch how the margin shifts.
                   </span>
+                </div>
+
+                <!-- Live margin axis — visible proof the tool is reactive -->
+                <div class="sim-axis" aria-hidden="true">
+                  <div class="axis-labels-top mono">
+                    <span>Republican</span>
+                    <span>Tied</span>
+                    <span>Democratic</span>
+                  </div>
+                  <div class="axis-track">
+                    <div class="axis-half axis-r"></div>
+                    <div class="axis-half axis-d"></div>
+                    <div class="axis-center"></div>
+                    <div class="axis-marker axis-baseline" style="left: {baselinePos}%">
+                      <span class="marker-dot"></span>
+                      <span class="marker-tag mono">2020</span>
+                    </div>
+                    <div class="axis-marker axis-projected" class:offscale={projOffscale} style="left: {projPos}%">
+                      <span class="marker-dot proj"></span>
+                      <span class="marker-label mono">
+                        {sim.newParty}+{Math.abs(sim.newPct).toFixed(1)}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="axis-scale mono">
+                    <span>R+8</span>
+                    <span>R+4</span>
+                    <span>0</span>
+                    <span>D+4</span>
+                    <span>D+8</span>
+                  </div>
                 </div>
 
                 <div class="sim-slider-wrap">
@@ -397,7 +438,15 @@
   </ol>
 
   <p class="method mono">
-    Method: presidential leverage scaled by closeness of 2020 margin;
+    <span class="method-label">Method in plain English:</span>
+    counties where more people voted <em>and</em> the 2020 margin was
+    closer score higher — those are the places where a single mover
+    changes the largest amount of political math per person. States
+    are scored the same way, with a boost for how many of that state's
+    legislative seats are currently competitive.
+  </p>
+  <p class="method mono method-formal">
+    Formal: presidential leverage scaled by closeness of 2020 margin;
     state-leg leverage scaled by share of chamber seats currently within
     5 points. Combined per the weight slider above. County leverage =
     total votes cast ÷ (1 + |margin %|). Sources: MIT Election Lab ·
@@ -472,6 +521,14 @@
   }
   .toggle-btn.active { background: #fff; color: var(--color-text); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
   .toggle-btn:focus-visible { outline: 2px solid var(--color-competitive); outline-offset: 2px; }
+
+  .toggle-hint {
+    margin: 0;
+    font-size: 0.6875rem;
+    color: #9ca3af;
+    line-height: 1.5;
+    max-width: 280px;
+  }
 
   .slider-row {
     display: flex;
@@ -699,6 +756,117 @@
   }
   .sim-dir { font-weight: 600; color: var(--color-text); }
 
+  /* ── Live margin axis ─────────────────────────────────────── */
+  .sim-axis {
+    margin: 0 0 2rem;
+    padding: 2rem 0.5rem 0;
+  }
+  .axis-labels-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.625rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.625rem;
+  }
+  .axis-labels-top span:first-child { color: #b91c1c; }
+  .axis-labels-top span:last-child  { color: #1d4ed8; }
+  .axis-track {
+    position: relative;
+    height: 42px;
+    display: flex;
+    border-radius: 3px;
+    overflow: visible;
+  }
+  .axis-half {
+    flex: 1;
+    height: 100%;
+  }
+  .axis-r {
+    background: linear-gradient(to left, rgba(220, 38, 38, 0.06), rgba(220, 38, 38, 0.22));
+    border-radius: 3px 0 0 3px;
+  }
+  .axis-d {
+    background: linear-gradient(to right, rgba(37, 99, 235, 0.06), rgba(37, 99, 235, 0.22));
+    border-radius: 0 3px 3px 0;
+  }
+  .axis-center {
+    position: absolute;
+    left: 50%;
+    top: -4px;
+    bottom: -4px;
+    width: 1px;
+    background: #4b5563;
+    transform: translateX(-0.5px);
+  }
+
+  .axis-marker {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .axis-baseline { z-index: 1; }
+  .axis-projected {
+    z-index: 2;
+    transition: left 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .axis-projected { transition: none; }
+  }
+  .marker-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #6b7280;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+  .marker-dot.proj {
+    background: var(--color-competitive);
+    width: 15px;
+    height: 15px;
+    animation: sim-pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes sim-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.45), 0 1px 3px rgba(0,0,0,0.25); }
+    50%      { box-shadow: 0 0 0 10px rgba(217, 119, 6, 0), 0 1px 3px rgba(0,0,0,0.25); }
+  }
+  .marker-tag {
+    position: absolute;
+    top: 1.25rem;
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6b7280;
+  }
+  .marker-label {
+    position: absolute;
+    bottom: 1.25rem;
+    font-size: 0.75rem;
+    color: var(--color-text);
+    background: #fff;
+    padding: 0.15em 0.5em;
+    border-radius: 2px;
+    border: 1.5px solid var(--color-competitive);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .axis-projected.offscale .marker-label::after {
+    content: ' →';
+    color: var(--color-competitive);
+  }
+  .axis-scale {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    font-size: 0.625rem;
+    color: #9ca3af;
+  }
+
   .sim-slider-wrap { margin-bottom: 1.25rem; }
   .sim-slider {
     width: 100%;
@@ -897,10 +1065,23 @@
   /* ── Method footnote ──────────────────────────────────────── */
   .method {
     max-width: var(--max-wide);
-    margin: 3rem auto 0;
+    margin: 2rem auto 0;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+  .method-label {
+    font-weight: 600;
+    color: var(--color-text);
+    letter-spacing: 0.02em;
+  }
+  .method em { font-style: italic; color: var(--color-text); font-weight: 500; }
+  .method-formal {
     font-size: 0.75rem;
     color: #9ca3af;
-    line-height: 1.6;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f3f4f6;
   }
 
   /* ── Mobile ───────────────────────────────────────────────── */

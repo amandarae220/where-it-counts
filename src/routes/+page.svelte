@@ -26,7 +26,7 @@
       mode: 'total-surplus',
       stat: '76M',
       statLabel: 'Votes cast outside the decisive margin',
-      text: 'Combined, 76 million votes — nearly half of all votes cast in 2020 — went to places where the margin was not in question. They were counted. But the result in those places was settled before they were cast. Because of geography.',
+      text: 'Combined, 76 million votes — nearly half of all votes cast in 2020 — went to places where the outcome was never in question. They were counted. But the result in those places was settled before they were cast. Because of geography.',
     },
     {
       mode: 'zoom-swing',
@@ -43,7 +43,7 @@
       <p class="kicker mono">A data journalism project</p>
       <h1>Where It&nbsp;Counts</h1>
       <p class="deck">
-        In 2020, 76 million votes were cast in places where the margin
+        In 2020, 76 million votes were cast in places where the outcome
         was never in question. Here's what the data says about where your vote can have the
         most impact, and what moving could change.
       </p>
@@ -193,17 +193,18 @@
           Seven Georgia House districts were decided by fewer than 1,000 votes.
           Twenty-six Wisconsin Assembly districts by fewer than 5,000.
         </p>
-        <p class="state-tail">
-          And here's what ties it together: win enough of these seats and
+        <div class="pull-quote">
+        <p>
+          Cue gerrymandering: win enough seats and
           your party gets to redraw the district lines for the next ten
           years — packing the other side into a few districts, spreading
           your own voters out to win the rest. That's gerrymandering, and it
-          starts in races this small. The candidates already know it. Plenty
-          of them move into a district that leans their way before they ever
-          run — pick the spot, then stand on it. Both parties, every level.
+          starts in races this small. The candidates already know it. 
+          The strategy is simple - pick the spot, then stand on it. Both parties, every level.
           It's legal, it's out in the open, and it's the same move that's
           available to you.
         </p>
+        </div>
       </div>
     </section>
   </div>
@@ -433,13 +434,12 @@
     border-left: 3px solid var(--color-competitive);
     margin: 2.5rem 0;
     padding: 1rem 1.5rem;
-    background: #f9fafb;
   }
   .pull-quote p {
     font-family: var(--font-serif);
     font-size: 1.1875rem;
     line-height: 1.6;
-    color: var(--color-text);
+    color: #f9fafb;
     margin: 0;
   }
 
