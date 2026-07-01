@@ -36,11 +36,24 @@
   // so both this tool and MapMoves invoke the same functions.
 
   // ── Derived: per-state results + aggregate EC ──────────────────
-  $: simResults = SWING_STATES.map(s => ({
-    ...s,
-    movers: allocations[s.code] || 0,
-    ...simulate(s, $direction, allocations[s.code] || 0),
-  }));
+  // Each row also carries a `flipTarget` — the exact allocation that
+  // would flip the state, if the allocation direction opposes its
+  // current lean AND that flip point sits within the current budget.
+  // Rendered as a tick beneath each slider.
+  $: simResults = SWING_STATES.map(s => {
+    const movers = allocations[s.code] || 0;
+    const sim = simulate(s, $direction, movers);
+    const flipMovers = Math.abs(s.margin_votes) + 1;
+    const canFlip = sim.origParty !== $direction && flipMovers <= budget;
+    const flipTarget = canFlip
+      ? {
+          movers: flipMovers,
+          pct: (flipMovers / budget) * 100,
+          reached: movers >= flipMovers,
+        }
+      : null;
+    return { ...s, movers, ...sim, flipTarget };
+  });
   $: flippedStates = simResults.filter(r => r.flipped);
   $: ecShift = flippedStates.reduce((acc, r) => {
     return r.newParty === 'D' ? acc + r.ev : acc - r.ev;
@@ -208,17 +221,33 @@
             <span class="alloc-slider-num">{fmt(r.movers)}</span>
             <span class="alloc-slider-sub">movers to {r.name}</span>
           </label>
-          <input
-            id="alloc-{r.code}"
-            type="range"
-            min="0"
-            max={perStateMax}
-            step={sliderStep}
-            value={r.movers}
-            on:input={(e) => allocations[r.code] = +e.target.value}
-            class="alloc-slider"
-            aria-valuetext="{fmt(r.movers)} movers to {r.name}"
-          />
+          <div class="slider-track">
+            <input
+              id="alloc-{r.code}"
+              type="range"
+              min="0"
+              max={perStateMax}
+              step={sliderStep}
+              value={r.movers}
+              on:input={(e) => allocations[r.code] = +e.target.value}
+              class="alloc-slider"
+              aria-valuetext="{fmt(r.movers)} movers to {r.name}"
+              aria-describedby={r.flipTarget ? `flip-${r.code}` : undefined}
+            />
+            {#if r.flipTarget}
+              <div
+                class="flip-mark"
+                class:reached={r.flipTarget.reached}
+                style="left: {r.flipTarget.pct}%"
+                aria-hidden="true"
+              >
+                <span class="flip-line"></span>
+                <span class="flip-label mono" id="flip-{r.code}">
+                  Flip at {fmt(r.flipTarget.movers)}
+                </span>
+              </div>
+            {/if}
+          </div>
         </div>
 
         <div class="alloc-projected">
@@ -597,6 +626,58 @@
   .tier-shifting    { background: #f3f4f6; color: #4b5563; }
 
   .alloc-slider-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  /* Slider + flip-tick container. Position:relative so the tick can
+     anchor itself to the slider's coordinate space. Extra bottom
+     padding reserves room for the "Flip at N" label so it doesn't
+     collide with the projected-lean row below. */
+  .slider-track {
+    position: relative;
+    padding-bottom: 1.5rem;
+  }
+  .slider-track .alloc-slider {
+    display: block;
+    width: 100%;
+  }
+
+  /* Flip target tick — subtle grey when unmet, amber when the reader's
+     allocation has crossed it. Matches the piece's accent colour. */
+  .flip-mark {
+    position: absolute;
+    top: 100%;
+    transform: translate(-50%, -0.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    transition: color 0.2s;
+  }
+  .flip-line {
+    width: 1.5px;
+    height: 9px;
+    background: #9ca3af;
+    border-radius: 1px;
+    transition: background 0.2s, height 0.2s;
+  }
+  .flip-label {
+    font-size: 0.6rem;
+    color: #9ca3af;
+    margin-top: 2px;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+    transition: color 0.2s, font-weight 0.2s;
+  }
+  .flip-mark.reached .flip-line {
+    background: var(--color-competitive);
+    height: 12px;
+  }
+  .flip-mark.reached .flip-label {
+    color: var(--color-competitive);
+    font-weight: 600;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .flip-line, .flip-label { transition: none; }
+  }
   .alloc-slider-label {
     font-size: 0.8125rem;
     color: var(--color-text);
