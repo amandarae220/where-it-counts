@@ -3,6 +3,7 @@
   import Scrollytelling   from '$lib/components/Scrollytelling.svelte';
   import SurplusMapViz    from '$lib/components/viz/SurplusMapViz.svelte';
   import MapMoves         from '$lib/components/sections/MapMoves.svelte';
+  import MoversBudget     from '$lib/components/sections/MoversBudget.svelte';
   // import Calculator       from '$lib/components/sections/Calculator.svelte';
 
   const surplusSteps = [
@@ -211,6 +212,9 @@
 
   <!-- Interactive: how the map could move -->
   <MapMoves />
+
+  <!-- Interactive: what actually happens if you move people -->
+  <MoversBudget />
 
   <!-- Destination calculator — the actionable payoff -->
   <!-- <Calculator /> -->
