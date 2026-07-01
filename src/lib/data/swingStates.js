@@ -31,6 +31,14 @@ export const SWING_STATES = [
 export const BASELINE_D_EV = 303;
 export const BASELINE_R_EV = 235;
 
+// Census state FIPS codes for the 9 battleground states. Used by both
+// StateMiniMap (per-state drill-in) and AllocationMap (national impact
+// visualization) to join simulation results to TopoJSON state features.
+export const SWING_STATE_FIPS = {
+  GA: '13', AZ: '04', WI: '55', PA: '42', MI: '26',
+  NC: '37', NV: '32', FL: '12', TX: '48',
+};
+
 // Reference anchors for the Movers Budget tool.
 // Every "budget" the user selects gets contextualized against these
 // real numbers — not aspirational scenarios.

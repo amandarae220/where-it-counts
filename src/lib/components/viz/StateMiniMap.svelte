@@ -5,14 +5,11 @@
   // counties-10m.json the main scrollytelling viz already loads —
   // second fetch hits the browser cache.
 
+  import { SWING_STATE_FIPS as STATE_FIPS } from '$lib/data/swingStates.js';
+
   export let stateCode;
   export let highlightFips = [];
   export let hoveredFips = null;
-
-  const STATE_FIPS = {
-    GA: '13', AZ: '04', WI: '55', PA: '42', MI: '26',
-    NC: '37', NV: '32', FL: '12', TX: '48',
-  };
   const W = 320, H = 220;
 
   let counties = [];

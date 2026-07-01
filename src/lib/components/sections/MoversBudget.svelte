@@ -13,6 +13,7 @@
     BASELINE_R_EV,
     REFERENCES,
   } from '$lib/data/swingStates.js';
+  import AllocationMap from '$lib/components/viz/AllocationMap.svelte';
 
   // ── Controls ───────────────────────────────────────────────────
   let budgetPct = 5;        // % of US annual interstate flow
@@ -256,6 +257,11 @@
   <!-- ── Impact panel ────────────────────────────────────────── -->
   <div class="impact">
     <h3 class="impact-title">Your allocation, aggregated</h3>
+
+    <!-- National choropleth — the visual answer to "what changed?" -->
+    <div class="impact-viz">
+      <AllocationMap {simResults} />
+    </div>
 
     <div class="impact-grid">
       <div class="impact-block impact-ec">
@@ -665,8 +671,13 @@
     font-family: var(--font-serif);
     font-size: clamp(1.375rem, 3vw, 1.75rem);
     font-weight: 700;
-    margin: 0 0 1.75rem;
+    margin: 0 0 1.5rem;
     line-height: 1.2;
+  }
+  .impact-viz {
+    margin: 0 auto 2.25rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid #f3f4f6;
   }
   .impact-grid {
     display: grid;
