@@ -3,6 +3,7 @@
   import Scrollytelling   from '$lib/components/Scrollytelling.svelte';
   import SurplusMapViz    from '$lib/components/viz/SurplusMapViz.svelte';
   import MapMoves         from '$lib/components/sections/MapMoves.svelte';
+  // import Calculator       from '$lib/components/sections/Calculator.svelte';
 
   const surplusSteps = [
     {
@@ -42,9 +43,9 @@
       <p class="kicker mono">A data journalism project</p>
       <h1>Where It&nbsp;Counts</h1>
       <p class="deck">
-        For decades, politicians have used geography as a strategic tool —
-        drawing maps to protect themselves and picking districts where they
-        can win. Voters can make the same move. Most just don't know it yet.
+        In 2020, 76 million votes were cast in places where the margin
+        was never in question. Here's what the data says about where your vote can have the
+        most impact, and what moving could change.
       </p>
       <a href="#the-data" class="cta">See the data <span aria-hidden="true">↓</span></a>
     </div>
@@ -71,45 +72,81 @@
   </section-->
 
   <!-- Two moves -->
-  <section class="two-moves section">
+  <!--section class="two-moves section">
     <div class="prose">
-      <p class="eyebrow mono">Two moves. Same instinct.</p>
-      <h2>Politicians Have Been Playing This Game for Decades.</h2>
+      <p class="eyebrow mono">Same instinct, two moves</p>
+      <h2>Politicians Have Always Treated Location as Strategy.</h2>
       <div class="divider"></div>
+
+      <p class="moves-lede">
+        Start with the big ones — president, senator, governor. Nobody draws
+        districts for those. What decides them is simpler: over the years,
+        people sorted themselves. We moved for jobs, for weather, for the
+        cost of living, for the vibe — and whole states quietly slid into
+        one column and stayed. That's the engine under all of it. Politicians
+        didn't build it. They just learned to use it two ways.
+      </p>
 
       <div class="moves-grid">
         <div class="move">
           <span class="move-num mono">01</span>
-          <h3>They draw the map</h3>
+          <h3>They pick their spot</h3>
           <p>
-            After every Census, the party in power redraws district lines to
-            concentrate opponents and spread out their own voters. It locks in
-            outcomes that protect careers regardless of how people feel.
-            That's gerrymandering — and it's been working for forty years.
+            They move to where they can win. A state senate hopeful picks a
+            district that already leans their way. Someone running for
+            Congress rents an apartment in a swing seat. They're not drawing
+            the map — just standing in a good spot on it. Both parties, every
+            level. It's legal, it's out in the open, and once you notice it
+            you can't unsee it.
           </p>
+          <div class="move-affects">
+            <span class="mono affects-label">What this affects</span>
+            <span class="affects-body">
+              Every race, president to school board.
+              Anywhere location shapes the odds.
+            </span>
+          </div>
         </div>
         <div class="move">
           <span class="move-num mono">02</span>
-          <h3>They pick their spot on it</h3>
+          <h3>They draw the lines</h3>
           <p>
-            Before gerrymandering is even relevant, candidates scout precincts,
-            study registration trends, and choose where to run. A state senate
-            candidate moves to a better district. A congressional hopeful picks
-            an apartment in a swing seat. Both parties. Every level of office.
-            It's not a secret. It's just strategy.
+            For races that do have districts, whoever's in power gets a
+            second move. Every ten years they redraw the lines — cramming the
+            other side into a few districts, spreading their own people out to
+            win more. That's gerrymandering. It only works because we've
+            already sorted ourselves; the lines just press harder on it.
           </p>
+          <div class="move-affects">
+            <span class="mono affects-label">What this affects</span>
+            <span class="affects-body">
+              U.S. House. State house and senate.
+              Anywhere district lines get drawn.
+            </span>
+          </div>
         </div>
       </div>
 
       <div class="pull-quote">
         <p>
-          Voters have access to the same map, the same data, and the same
-          freedom to move. The question is whether they start using them
-          the same way.
+          You've got the same map they do — the same numbers, the same
+          freedom to pack up and move. The only question is whether you
+          ever use it.
         </p>
       </div>
+
+      <p class="mechanism-note">
+        <span class="mono note-label">The common thread</span>
+        So here's the whole thing in one breath: sorting decides the big
+        races, sorting plus map-drawing decides the district ones. Either way
+        it shakes out the same — most votes get cast where the result was
+        never close, and a few get cast where it all comes down to the wire.
+        Whether your vote is <em>decisive or surplus</em> comes down to where
+        you live. The rest of this is us showing you that math — and what
+        you'd actually do about it. No yard signs, no doorknocking.
+      </p>
     </div>
-  </section>
+  </section-->
 
   <!-- ── What the data actually shows ──────────────────────────── -->
   <div id="the-data">
@@ -149,11 +186,23 @@
             <span class="leg-where mono">WI State Senate · District 32 · 2020</span>
           </div>
         </div>
+        <p class="leg-source mono">Source: OpenElections + Ballotpedia · 2020 official returns</p>
         <p class="state-tail">
           These are the people who draw the maps, set school curricula,
           decide healthcare access, and control what goes on your ballot.
           Seven Georgia House districts were decided by fewer than 1,000 votes.
           Twenty-six Wisconsin Assembly districts by fewer than 5,000.
+        </p>
+        <p class="state-tail">
+          And here's what ties it together: win enough of these seats and
+          your party gets to redraw the district lines for the next ten
+          years — packing the other side into a few districts, spreading
+          your own voters out to win the rest. That's gerrymandering, and it
+          starts in races this small. The candidates already know it. Plenty
+          of them move into a district that leans their way before they ever
+          run — pick the spot, then stand on it. Both parties, every level.
+          It's legal, it's out in the open, and it's the same move that's
+          available to you.
         </p>
       </div>
     </section>
@@ -162,16 +211,37 @@
   <!-- Interactive: how the map could move -->
   <MapMoves />
 
-  <!-- Bridge CTA — deeper case + destination calculator -->
-  <section class="bridge">
+  <!-- Destination calculator — the actionable payoff -->
+  <!-- <Calculator /> -->
+
+  <!-- Closer: 2031 timing math + honest scale + academic grounding -->
+  <section class="closer">
     <div class="prose">
-      <p class="bridge-hed">Want the full case and the destination calculator?</p>
-      <p class="bridge-sub">
-        How the lines got drawn, why candidates already move strategically,
-        what's coming in 2031, and a metro-by-metro ranking factoring cost
-        of living and remote-work eligibility.
+      <p class="eyebrow mono">The timing</p>
+      <h2>The map resets in 2030.</h2>
+      <div class="divider"></div>
+
+      <p>
+        Every ten years, after the Census, every district in the country
+        gets redrawn based on where people actually live. The next count
+        is April 2030. The new maps arrive for 2031.
       </p>
-      <a href="/the-case" class="cta">Read the full case <span aria-hidden="true">→</span></a>
+
+      <p>
+        A meaningful shift in a state-legislative district's math takes
+        thousands of movers, not hundreds. That's the honest scale of
+        the ask. This is a long-form civic move, not a stunt — and it's
+        the only one where a single household decision reallocates
+        political leverage the same way it reallocates real estate
+        value.
+      </p>
+
+      <p class="cite mono">
+        For the intellectual grounding of the surplus-vote framing, see
+        Jonathan Rodden, <em>Why Cities Lose</em> (2019), which documents
+        how Democratic voters have clustered into safe corners — the
+        same pattern this piece visualizes.
+      </p>
     </div>
   </section>
 
@@ -300,6 +370,14 @@
   h2 { margin-bottom: 1rem; }
   p  { margin-bottom: 1.25rem; }
 
+  .moves-lede {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    max-width: var(--max-prose);
+  }
+  .moves-lede em { font-style: italic; color: var(--color-text); }
+
   .moves-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -327,6 +405,25 @@
     line-height: 1.65;
     margin: 0;
   }
+  .move-affects {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    margin-top: 1rem;
+    padding-top: 0.875rem;
+    border-top: 1px dashed #d1d5db;
+  }
+  .affects-label {
+    font-size: 0.625rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-competitive);
+  }
+  .affects-body {
+    font-size: 0.8125rem;
+    color: var(--color-text);
+    line-height: 1.55;
+  }
 
   @media (max-width: 600px) {
     .moves-grid { grid-template-columns: 1fr; }
@@ -344,6 +441,31 @@
     line-height: 1.6;
     color: var(--color-text);
     margin: 0;
+  }
+
+  .mechanism-note {
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-left: 3px solid var(--color-competitive);
+    border-radius: 2px;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+  }
+  .note-label {
+    display: block;
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-competitive);
+    margin-bottom: 0.5rem;
+  }
+  .mechanism-note em {
+    font-style: italic;
+    color: var(--color-text);
+    font-weight: 500;
   }
 
   /* ── State leg ─────────────────────────────────────────────── */
@@ -393,32 +515,49 @@
     color: #4b5563;
     margin-top: 0.25rem;
   }
+  .leg-source {
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    color: #6b7280;
+    margin-top: -1.5rem;
+    margin-bottom: 2rem;
+  }
 
   @media (max-width: 780px) {
     .leg-stats { grid-template-columns: 1fr; gap: 1rem; }
   }
 
-  /* ── Bridge CTA ────────────────────────────────────────────── */
-  .bridge {
+  /* ── Closer ────────────────────────────────────────────────── */
+  .closer {
     padding: 7rem 0;
     background: var(--color-bg-dark);
     color: var(--color-text-light);
   }
-  .bridge-hed {
-    font-family: var(--font-serif);
-    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
-    font-weight: 700;
+  .closer h2 {
     color: var(--color-text-light);
-    line-height: 1.2;
     margin-bottom: 1rem;
+  }
+  .closer p {
+    color: #d1d5db;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
     max-width: var(--max-prose);
   }
-  .bridge-sub {
-    font-size: 1.0625rem;
-    color: #9ca3af;
+  .closer .eyebrow {
+    color: var(--color-competitive);
+  }
+  .closer .cite {
+    font-size: 0.8125rem;
+    color: #6b7280;
     line-height: 1.65;
-    margin-bottom: 2rem;
-    max-width: 520px;
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    border-top: 1px solid #1f2937;
+  }
+  .closer .cite em {
+    font-style: italic;
+    color: #9ca3af;
   }
 
   /* ── Footer ────────────────────────────────────────────────── */
