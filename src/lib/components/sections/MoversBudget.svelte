@@ -13,10 +13,15 @@
     BASELINE_R_EV,
     REFERENCES,
   } from '$lib/data/swingStates.js';
+  import { simulate, stateTier } from '$lib/data/simulation.js';
+  import AllocationMap from '$lib/components/viz/AllocationMap.svelte';
+  import { direction } from '$lib/stores/direction.js';
 
   // ── Controls ───────────────────────────────────────────────────
+  // `direction` is a shared store — see $lib/stores/direction.js.
+  // Toggling here also updates MapMoves' direction, so scrolling
+  // between the two tools preserves the reader's chosen framing.
   let budgetPct = 5;        // % of US annual interstate flow
-  let direction = 'D';      // 'D' or 'R'
   let allocations = {};     // stateCode → absolute movers assigned
 
   // ── Derived: budget + meter math ───────────────────────────────
@@ -27,38 +32,28 @@
   $: overBudget = allocatedTotal > budget;
   $: budgetUsePct = budget === 0 ? 0 : Math.min(100, Math.round((allocatedTotal / budget) * 100));
 
-  // ── Simulation model ───────────────────────────────────────────
-  // Same math the (now-removed) MapMoves sensitivity panel used:
-  // shift margin_votes by movers in the chosen direction, then
-  // recompute margin_pct proportionally.
-  function simulate(state, dir, movers) {
-    const netChange = dir === 'D' ? movers : -movers;
-    const newMargin = state.margin_votes + netChange;
-    const pctPerVote = state.margin_pct / state.margin_votes;
-    const newPct = newMargin * pctPerVote;
-    const newParty = newMargin > 0 ? 'D' : 'R';
-    const origParty = state.margin_votes > 0 ? 'D' : 'R';
-    return {
-      newMargin,
-      newPct,
-      newParty,
-      origParty,
-      flipped: newParty !== origParty,
-    };
-  }
-  function stateTier(pct) {
-    const m = Math.abs(pct);
-    if (m < 1)  return { key: 'razor',       label: 'Razor thin'  };
-    if (m < 3)  return { key: 'competitive', label: 'Competitive' };
-    return        { key: 'shifting',    label: 'Shifting'    };
-  }
+  // Simulation math + tier classifiers live in $lib/data/simulation.js
+  // so both this tool and MapMoves invoke the same functions.
 
   // ── Derived: per-state results + aggregate EC ──────────────────
-  $: simResults = SWING_STATES.map(s => ({
-    ...s,
-    movers: allocations[s.code] || 0,
-    ...simulate(s, direction, allocations[s.code] || 0),
-  }));
+  // Each row also carries a `flipTarget` — the exact allocation that
+  // would flip the state, if the allocation direction opposes its
+  // current lean AND that flip point sits within the current budget.
+  // Rendered as a tick beneath each slider.
+  $: simResults = SWING_STATES.map(s => {
+    const movers = allocations[s.code] || 0;
+    const sim = simulate(s, $direction, movers);
+    const flipMovers = Math.abs(s.margin_votes) + 1;
+    const canFlip = sim.origParty !== $direction && flipMovers <= budget;
+    const flipTarget = canFlip
+      ? {
+          movers: flipMovers,
+          pct: (flipMovers / budget) * 100,
+          reached: movers >= flipMovers,
+        }
+      : null;
+    return { ...s, movers, ...sim, flipTarget };
+  });
   $: flippedStates = simResults.filter(r => r.flipped);
   $: ecShift = flippedStates.reduce((acc, r) => {
     return r.newParty === 'D' ? acc + r.ev : acc - r.ev;
@@ -138,15 +133,15 @@
       <div class="toggle" role="radiogroup" aria-label="Allocation direction">
         <button
           class="toggle-btn"
-          class:active={direction === 'D'}
-          aria-pressed={direction === 'D'}
-          on:click={() => direction = 'D'}
+          class:active={$direction === 'D'}
+          aria-pressed={$direction === 'D'}
+          on:click={() => $direction = 'D'}
         >Democratic</button>
         <button
           class="toggle-btn"
-          class:active={direction === 'R'}
-          aria-pressed={direction === 'R'}
-          on:click={() => direction = 'R'}
+          class:active={$direction === 'R'}
+          aria-pressed={$direction === 'R'}
+          on:click={() => $direction = 'R'}
         >Republican</button>
       </div>
       <p class="toggle-hint mono">
@@ -226,17 +221,33 @@
             <span class="alloc-slider-num">{fmt(r.movers)}</span>
             <span class="alloc-slider-sub">movers to {r.name}</span>
           </label>
-          <input
-            id="alloc-{r.code}"
-            type="range"
-            min="0"
-            max={perStateMax}
-            step={sliderStep}
-            value={r.movers}
-            on:input={(e) => allocations[r.code] = +e.target.value}
-            class="alloc-slider"
-            aria-valuetext="{fmt(r.movers)} movers to {r.name}"
-          />
+          <div class="slider-track">
+            <input
+              id="alloc-{r.code}"
+              type="range"
+              min="0"
+              max={perStateMax}
+              step={sliderStep}
+              value={r.movers}
+              on:input={(e) => allocations[r.code] = +e.target.value}
+              class="alloc-slider"
+              aria-valuetext="{fmt(r.movers)} movers to {r.name}"
+              aria-describedby={r.flipTarget ? `flip-${r.code}` : undefined}
+            />
+            {#if r.flipTarget}
+              <div
+                class="flip-mark"
+                class:reached={r.flipTarget.reached}
+                style="left: {r.flipTarget.pct}%"
+                aria-hidden="true"
+              >
+                <span class="flip-line"></span>
+                <span class="flip-label mono" id="flip-{r.code}">
+                  Flip at {fmt(r.flipTarget.movers)}
+                </span>
+              </div>
+            {/if}
+          </div>
         </div>
 
         <div class="alloc-projected">
@@ -256,6 +267,11 @@
   <!-- ── Impact panel ────────────────────────────────────────── -->
   <div class="impact">
     <h3 class="impact-title">Your allocation, aggregated</h3>
+
+    <!-- National choropleth — the visual answer to "what changed?" -->
+    <div class="impact-viz">
+      <AllocationMap {simResults} />
+    </div>
 
     <div class="impact-grid">
       <div class="impact-block impact-ec">
@@ -610,6 +626,58 @@
   .tier-shifting    { background: #f3f4f6; color: #4b5563; }
 
   .alloc-slider-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  /* Slider + flip-tick container. Position:relative so the tick can
+     anchor itself to the slider's coordinate space. Extra bottom
+     padding reserves room for the "Flip at N" label so it doesn't
+     collide with the projected-lean row below. */
+  .slider-track {
+    position: relative;
+    padding-bottom: 1.5rem;
+  }
+  .slider-track .alloc-slider {
+    display: block;
+    width: 100%;
+  }
+
+  /* Flip target tick — subtle grey when unmet, amber when the reader's
+     allocation has crossed it. Matches the piece's accent colour. */
+  .flip-mark {
+    position: absolute;
+    top: 100%;
+    transform: translate(-50%, -0.5rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    transition: color 0.2s;
+  }
+  .flip-line {
+    width: 1.5px;
+    height: 9px;
+    background: #9ca3af;
+    border-radius: 1px;
+    transition: background 0.2s, height 0.2s;
+  }
+  .flip-label {
+    font-size: 0.6rem;
+    color: #9ca3af;
+    margin-top: 2px;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+    transition: color 0.2s, font-weight 0.2s;
+  }
+  .flip-mark.reached .flip-line {
+    background: var(--color-competitive);
+    height: 12px;
+  }
+  .flip-mark.reached .flip-label {
+    color: var(--color-competitive);
+    font-weight: 600;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .flip-line, .flip-label { transition: none; }
+  }
   .alloc-slider-label {
     font-size: 0.8125rem;
     color: var(--color-text);
@@ -665,8 +733,13 @@
     font-family: var(--font-serif);
     font-size: clamp(1.375rem, 3vw, 1.75rem);
     font-weight: 700;
-    margin: 0 0 1.75rem;
+    margin: 0 0 1.5rem;
     line-height: 1.2;
+  }
+  .impact-viz {
+    margin: 0 auto 2.25rem;
+    padding-bottom: 1.75rem;
+    border-bottom: 1px solid #f3f4f6;
   }
   .impact-grid {
     display: grid;

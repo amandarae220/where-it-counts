@@ -2,6 +2,8 @@
   import { flip } from 'svelte/animate';
   import StateMiniMap from '$lib/components/viz/StateMiniMap.svelte';
   import { SWING_STATES as STATES } from '$lib/data/swingStates.js';
+  import { stateTier, countyTier } from '$lib/data/simulation.js';
+  import { direction } from '$lib/stores/direction.js';
 
   // ── Where the map could move ────────────────────────────────────
   // Interactive: 9 swing states, two-level drill-down.
@@ -15,7 +17,9 @@
   // job cleanly.
 
   // ── Controls ───────────────────────────────────────────────────
-  let direction = 'D';        // 'D' = shift toward Democratic, 'R' = toward Republican
+  // `direction` is a shared store — see $lib/stores/direction.js.
+  // Toggling here also updates MoversBudget's direction, so scrolling
+  // between the two tools preserves the reader's chosen framing.
   let weightPres = 60;        // 0–100 — presidential weight in combined score
   let expandedCode = null;    // state code currently drilled into
   let countyCache = {};       // stateCode → top counties
@@ -54,29 +58,15 @@
     return { party: 'R', label: `R +${Math.abs(s.margin_pct).toFixed(2)} pts` };
   }
 
-  // Competitiveness labels — same vocabulary as the destination Calculator
-  // (Razor thin / Competitive / Shifting) so the piece reads consistently.
-  // State thresholds tuned to the 9-state dataset; county thresholds wider
-  // because a 5-pt county margin is still very much in play.
-  function stateTier(marginPct) {
-    const m = Math.abs(marginPct);
-    if (m < 1)  return { key: 'razor',       label: 'Razor thin'  };
-    if (m < 3)  return { key: 'competitive', label: 'Competitive' };
-    return        { key: 'shifting',    label: 'Shifting'    };
-  }
-  function countyTier(marginPct) {
-    const m = Math.abs(marginPct);
-    if (m < 2)  return { key: 'razor',       label: 'Razor thin'  };
-    if (m < 8)  return { key: 'competitive', label: 'Competitive' };
-    return        { key: 'shifting',    label: 'Shifting'    };
-  }
+  // stateTier + countyTier live in $lib/data/simulation.js — same
+  // vocabulary and thresholds shared with MoversBudget.
 
   // ── Reactive: ranked list ──────────────────────────────────────
   $: ranked = [...STATES]
     .map(s => ({
       ...s,
       score: combinedScore(s, weightPres),
-      shiftVotes: votesToShift(s, direction),
+      shiftVotes: votesToShift(s, $direction),
       lean: currentLean(s),
       tier: stateTier(s.margin_pct),
     }))
@@ -94,7 +84,7 @@
       .filter(c => Math.abs(c.margin_pct) < 25)
       .map(c => {
         const leverage = c.total / (1 + Math.abs(c.margin_pct));
-        const need = direction === 'D'
+        const need = $direction === 'D'
           ? (c.winner === 'gop' ? Math.ceil(Math.abs(c.dem - c.gop) / 2) + 1 : 0)
           : (c.winner === 'dem' ? Math.ceil(Math.abs(c.dem - c.gop) / 2) + 1 : 0);
         return { ...c, leverage, need };
@@ -117,7 +107,7 @@
   $: if (expandedCode && countyCache[expandedCode]) {
     countyCache[expandedCode] = countyCache[expandedCode].map(c => ({
       ...c,
-      need: direction === 'D'
+      need: $direction === 'D'
         ? (c.winner === 'gop' ? Math.ceil(Math.abs(c.dem - c.gop) / 2) + 1 : 0)
         : (c.winner === 'dem' ? Math.ceil(Math.abs(c.dem - c.gop) / 2) + 1 : 0),
     }));
@@ -147,15 +137,15 @@
       <div class="toggle" role="radiogroup" aria-label="Direction">
         <button
           class="toggle-btn"
-          class:active={direction === 'D'}
-          aria-pressed={direction === 'D'}
-          on:click={() => direction = 'D'}
+          class:active={$direction === 'D'}
+          aria-pressed={$direction === 'D'}
+          on:click={() => $direction = 'D'}
         >Democratic</button>
         <button
           class="toggle-btn"
-          class:active={direction === 'R'}
-          aria-pressed={direction === 'R'}
-          on:click={() => direction = 'R'}
+          class:active={$direction === 'R'}
+          aria-pressed={$direction === 'R'}
+          on:click={() => $direction = 'R'}
         >Republican</button>
       </div>
       <p class="toggle-hint mono">
@@ -217,9 +207,9 @@
           <span class="state-shift">
             {#if s.shiftVotes > 0}
               <span class="shift-num mono">{fmt(s.shiftVotes)}</span>
-              <span class="shift-label">net votes to flip toward {direction === 'D' ? 'D' : 'R'}</span>
+              <span class="shift-label">net votes to flip toward {$direction === 'D' ? 'D' : 'R'}</span>
             {:else}
-              <span class="shift-num mono shift-already">already {direction}</span>
+              <span class="shift-num mono shift-already">already {$direction}</span>
               <span class="shift-label">leg districts still in play</span>
             {/if}
           </span>
@@ -244,7 +234,7 @@
                 largest electorates × closest current margins. Hover a
                 card to see where the county sits in the state. The
                 "votes to flip" column shows the net shift it would need
-                to swing toward {direction === 'D' ? 'Democratic' : 'Republican'}.
+                to swing toward {$direction === 'D' ? 'Democratic' : 'Republican'}.
               </p>
               <div class="drill-layout">
                 <div class="drill-map">
@@ -287,9 +277,9 @@
                         <div class="cstat">
                           {#if c.need > 0}
                             <span class="cstat-num mono cstat-need">{fmt(c.need)}</span>
-                            <span class="cstat-label">to flip {direction}</span>
+                            <span class="cstat-label">to flip {$direction}</span>
                           {:else}
-                            <span class="cstat-num mono cstat-already">already {direction}</span>
+                            <span class="cstat-num mono cstat-already">already {$direction}</span>
                             <span class="cstat-label">expand the cushion</span>
                           {/if}
                         </div>

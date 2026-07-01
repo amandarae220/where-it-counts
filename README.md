@@ -8,6 +8,30 @@ It is not partisan. Both parties' surplus votes are shown. The piece is built on
 
 ---
 
+## What it looks like
+
+<p align="center">
+  <img src="docs/screenshots/01-hero.png" alt="Hero — dark opener with kicker 'A DATA JOURNALISM PROJECT', 'Where It Counts' title in Playfair, and the 76M-votes deck copy" width="900" />
+  <br />
+  <em>Hero — the opener. Playfair Display title, JetBrains Mono kicker, single amber accent throughout.</em>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/02-mapmoves.png" alt="MapMoves — Georgia drilled in, showing the per-state mini-map with amber-highlighted top counties and six county cards ranked by leverage" width="900" />
+  <br />
+  <em>MapMoves — Georgia drilled in. Per-state Mercator mini-map (with the state's outer boundary rendered on top of its county paths) sits alongside six county leverage cards. Hover any card and the map highlights the corresponding county. Every other state's ranking, direction toggle, and weight slider stay visible above.</em>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/03-moversbudget.png" alt="MoversBudget impact panel — national US choropleth with North Carolina outlined amber (flipped), multiple states showing D-blue intensity, Electoral College tally showing D 319 R 219, one state flipped, efficiency 6,250 movers per EC vote" width="900" />
+  <br />
+  <em>MoversBudget mid-allocation — 100,000 relocations to NC flip it from R to D (amber outline). The live D3 choropleth recomputes on every slider drag; the Electoral College tally shifts to D 319 / R 219 (+16 / −16 vs. baseline); efficiency reports 6,250 movers per EC vote gained. Every state's colour intensity scales with its projected margin.</em>
+</p>
+
+*Screenshots captured via [`docs/screenshots/capture.mjs`](docs/screenshots/capture.mjs) — a puppeteer-core script that boots headless Chrome against the running dev server, scripts the slider interactions, and shoots at 2× device pixel ratio.*
+
+---
+
 ## About this portfolio piece
 
 This project was designed, written, coded, tested for accessibility, and shipped by a single author across every layer — data pipeline, D3 visualizations, interactive tooling, editorial voice, copy, UX judgment, mobile behavior, and deploy config. In the age of AI-assisted execution, the differentiator isn't typing speed — it's the *judgment stack*: what to build, how it should feel, how copy shapes UX, how the accessibility model interacts with the animation model, when to add and when to cut. This piece is a case study in that stack, not just a demo of one part of it.

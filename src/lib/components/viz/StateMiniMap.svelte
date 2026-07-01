@@ -5,17 +5,15 @@
   // counties-10m.json the main scrollytelling viz already loads —
   // second fetch hits the browser cache.
 
+  import { SWING_STATE_FIPS as STATE_FIPS } from '$lib/data/swingStates.js';
+
   export let stateCode;
   export let highlightFips = [];
   export let hoveredFips = null;
-
-  const STATE_FIPS = {
-    GA: '13', AZ: '04', WI: '55', PA: '42', MI: '26',
-    NC: '37', NV: '32', FL: '12', TX: '48',
-  };
   const W = 320, H = 220;
 
   let counties = [];
+  let stateOutlinePath = null;   // rendered on top of counties for visual clarity
   let viewBox = `0 0 ${W} ${H}`;
   let loaded = false;
 
@@ -48,6 +46,17 @@
     const path = d3.geoPath().projection(projection);
 
     counties = stateCounties.map(f => ({ id: String(f.id), d: path(f) }));
+
+    // State outline: find the state polygon matching this code and
+    // render it as a heavy-stroke overlay so the shape reads clearly
+    // against the surrounding whitespace. Uses the same fitted
+    // projection so it registers exactly with the counties beneath.
+    const stateFeatures = topo.feature(topoData, topoData.objects.states).features;
+    const stateFeature = stateFeatures.find(f =>
+      String(f.id).padStart(2, '0') === prefix
+    );
+    stateOutlinePath = stateFeature ? path(stateFeature) : null;
+
     loaded = true;
   }
 </script>
@@ -70,6 +79,9 @@
         class:hover-on={hoveredFips === c.id}
       />
     {/each}
+    {#if stateOutlinePath}
+      <path class="state-outline" d={stateOutlinePath} />
+    {/if}
   </svg>
 </div>
 
@@ -116,5 +128,17 @@
     fill-opacity: 1;
     stroke: #1a1a1a;
     stroke-width: 0.9;
+  }
+  /* State outer boundary — heavy stroke rendered on top of county fills
+     so the state's shape reads instantly. pointer-events: none keeps
+     county hover interactions working through the overlay. */
+  path.state-outline {
+    fill: none;
+    stroke: #1a1a1a;
+    stroke-width: 1.4;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    pointer-events: none;
+    transition: none;
   }
 </style>
