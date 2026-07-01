@@ -407,6 +407,53 @@
     flex: 1;
     accent-color: var(--color-competitive);
   }
+
+  /* Consistent slider thumb size across the piece (matches MoversBudget).
+     22px thumb reads well on touch without dominating desktop. */
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-competitive);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    cursor: pointer;
+    margin-top: -9px;
+    transition: transform 0.12s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover  { transform: scale(1.12); }
+  input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
+  input[type=range]::-moz-range-track {
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-competitive);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    cursor: pointer;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    input[type=range]::-webkit-slider-thumb { transition: none; }
+    input[type=range]::-webkit-slider-thumb:hover,
+    input[type=range]::-webkit-slider-thumb:active { transform: none; }
+  }
   .slider-end {
     font-size: 0.6875rem;
     letter-spacing: 0.06em;

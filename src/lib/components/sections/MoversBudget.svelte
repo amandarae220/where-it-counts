@@ -182,6 +182,25 @@
     {/if}
   </div>
 
+  <!-- ── Sticky mobile summary — keeps live impact visible while user
+       scrolls through 9 allocation cards (mobile only) ───────── -->
+  <div class="mobile-summary" aria-live="polite">
+    <div class="mobile-summary-inner">
+      <div class="ms-block">
+        <span class="ms-label mono">Live EC</span>
+        <div class="ms-vals mono">
+          <span class="lean-D">{newD}</span>
+          <span class="ms-vs">·</span>
+          <span class="lean-R">{newR}</span>
+        </div>
+      </div>
+      <div class="ms-block ms-right">
+        <span class="ms-label mono">Flipped</span>
+        <span class="ms-flip-count mono">{flippedStates.length}</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ── State allocation grid ───────────────────────────────── -->
   <div class="state-grid">
     {#each simResults as r (r.code)}
@@ -749,18 +768,212 @@
   }
   .method-label { font-weight: 600; color: var(--color-text-muted); }
 
+  /* ── Sticky mobile impact summary ──────────────────────────
+     Hidden on desktop; on mobile it sticks below the controls so
+     the live EC totals stay visible as the reader scrolls through
+     the 9 allocation cards. Prevents context loss on long pages. */
+  .mobile-summary { display: none; }
+
+  /* ── Larger slider thumbs on touch devices ─────────────────
+     accent-color styles the fill but not the thumb size. Explicit
+     ::webkit and ::moz rules give predictable 24px thumbs everywhere
+     — comfortably tappable without overwhelming desktop UX. */
+  input[type=range] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-competitive);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    cursor: pointer;
+    margin-top: -9px;
+    transition: transform 0.12s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.12); }
+  input[type=range]::-webkit-slider-thumb:active { transform: scale(1.2); }
+  input[type=range]::-moz-range-track {
+    height: 4px;
+    background: #e5e7eb;
+    border-radius: 2px;
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--color-competitive);
+    border: 2px solid #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    cursor: pointer;
+  }
+  input[type=range]:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid var(--color-competitive);
+    outline-offset: 2px;
+  }
+
   /* ── Responsive ───────────────────────────────────────────── */
+
+  /* Tablet — controls stack, grid collapses to 2 cols, impact stacks */
   @media (max-width: 900px) {
     .controls { grid-template-columns: 1fr; }
     .state-grid { grid-template-columns: repeat(2, 1fr); }
     .impact-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+    /* Sticky live-EC bar becomes visible from this breakpoint down */
+    .mobile-summary {
+      display: block;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      margin: -1rem auto 1.5rem;
+      max-width: var(--max-wide);
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid #e5e7eb;
+      border-radius: 3px;
+      padding: 0.625rem 1rem;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+    .mobile-summary-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .ms-block { display: flex; flex-direction: column; gap: 0.15rem; }
+    .ms-right { align-items: flex-end; }
+    .ms-label {
+      font-size: 0.5625rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    .ms-vals {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      font-size: 1.125rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    .ms-vs { color: #9ca3af; }
+    .ms-flip-count {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--color-text);
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
   }
-  @media (max-width: 600px) {
-    .movers-budget { padding: 4rem 1rem; }
-    .controls { padding: 1.25rem; }
-    .state-grid { grid-template-columns: 1fr; }
-    .impact { padding: 1.5rem; }
-    .ec-row { flex-direction: column; }
-    .ec-vs { align-self: flex-start; padding-top: 0; }
+
+  /* Phone — everything to single column, tighter padding, larger touch targets */
+  @media (max-width: 620px) {
+    .movers-budget { padding: 4rem 1rem 5rem; }
+
+    .controls { padding: 1.25rem; gap: 1.5rem; }
+
+    /* Budget: current-% pill drops to its own row for legibility */
+    .budget-scale {
+      flex-wrap: wrap;
+      row-gap: 0.5rem;
+    }
+    .budget-scale-current {
+      order: 3;
+      width: 100%;
+      text-align: center;
+    }
+    .budget-anchors {
+      font-size: 0.6875rem;
+      line-height: 1.55;
+    }
+
+    /* Direction toggle: full-width segmented control */
+    .ctrl-direction .toggle { width: 100%; }
+    .toggle-btn {
+      flex: 1;
+      padding: 0.75rem 0.75rem;
+      font-size: 0.8125rem;
+    }
+
+    /* Meter: 3-row stack (label, count+percent, reset button + progress bar) */
+    .meter-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem 0.75rem;
+      align-items: center;
+    }
+    .meter-label { grid-column: 1 / 2; }
+    .reset-btn {
+      grid-column: 2 / 3;
+      grid-row: 1 / 3;
+      padding: 0.55rem 0.75rem;
+      min-height: 36px;
+    }
+    .meter-count {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+      font-size: 0.875rem;
+    }
+
+    /* State grid: 1 col, cards a bit denser */
+    .state-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+    .alloc-card { padding: 1rem 1.125rem; gap: 0.875rem; }
+    .alloc-title { flex-wrap: wrap; }
+    .alloc-current {
+      gap: 0.4rem;
+      font-size: 0.8125rem;
+    }
+    .alloc-projected {
+      gap: 0.375rem;
+      font-size: 0.875rem;
+    }
+    .alloc-flipped { margin-left: 0; }
+
+    /* Impact panel: tighter padding, stacked EC row */
+    .impact { padding: 1.5rem 1.25rem; }
+    .impact-title { margin-bottom: 1.25rem; }
+    .impact-grid { gap: 1.75rem; }
+    .ec-row { flex-direction: column; gap: 0.875rem; }
+    .ec-side { flex-direction: row; align-items: baseline; gap: 0.5rem; }
+    .ec-num { font-size: 2.25rem; }
+    .ec-delta { font-size: 0.6875rem; }
+    .ec-vs {
+      align-self: center;
+      padding: 0;
+      font-size: 0.75rem;
+    }
+    .flip-count { font-size: 2.25rem; }
+    .eff-num { font-size: 1.5rem; }
+
+    /* Method footnote: relaxed leading for small text */
+    .method {
+      font-size: 0.6875rem;
+      line-height: 1.75;
+    }
+
+    /* Sticky bar sits a bit tighter on phone */
+    .mobile-summary {
+      margin-top: -0.5rem;
+      padding: 0.5rem 0.875rem;
+    }
+    .mobile-summary-inner { gap: 0.75rem; }
+  }
+
+  /* Reduced-motion: kill thumb scale bounce */
+  @media (prefers-reduced-motion: reduce) {
+    input[type=range]::-webkit-slider-thumb { transition: none; }
+    input[type=range]::-webkit-slider-thumb:hover,
+    input[type=range]::-webkit-slider-thumb:active { transform: none; }
   }
 </style>
