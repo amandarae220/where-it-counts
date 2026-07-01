@@ -22,7 +22,7 @@
   let stateFeatures = [];
   let pathByFips = new Map();
   let loaded = false;
-  let tooltip = { visible: false, x: 0, y: 0, result: null };
+  let tooltip = { visible: false, x: 0, y: 0, fips: null };
 
   // Shared topo cache
   let topoPromise;
@@ -37,6 +37,27 @@
   $: fipsToResult = new Map(
     simResults.map(r => [SWING_STATE_FIPS[r.code], r])
   );
+
+  // Precomputed per-path attributes. This derivation exists purely so
+  // Svelte's static-analysis-based reactivity SEES the dependency chain
+  // between `fipsToResult` and the fill/stroke attributes. Reading
+  // `fipsToResult` inside a function body (`fillFor(fips)`) is invisible
+  // to the compiler — same trap as MapMoves' weight-slider bug that's
+  // documented in the README. Reference the store directly in the
+  // reactive expression and the CSS transition takes it from there.
+  $: pathAttrs = stateFeatures.map(feat => {
+    const fips = String(feat.id).padStart(2, '0');
+    const r = fipsToResult.get(fips);
+    return {
+      id: feat.id,
+      fips,
+      d: pathByFips.get(fips),
+      isSwing: !!r,
+      fill: computeFill(r),
+      stroke: computeStroke(r),
+      strokeWidth: computeStrokeWidth(r),
+    };
+  });
 
   onMount(async () => {
     const [d3, topo, topoData] = await Promise.all([
@@ -57,12 +78,16 @@
     loaded = true;
   });
 
-  // Color map: neutral for non-swing, gradient D-blue ↔ R-red for swing
-  // states based on their PROJECTED margin. Saturation scales with distance
-  // from zero, so a razor-thin state reads pale and a solidly-shifted state
-  // reads saturated. Matches the tier vocabulary the piece uses everywhere.
-  function fillFor(fips) {
-    const r = fipsToResult.get(fips);
+  // Color / stroke helpers — pure functions of the simulation result so
+  // the reactive pathAttrs derivation above can call them without hiding
+  // any dependencies from Svelte's compiler.
+  //
+  // Fill palette: neutral for non-swing states, gradient D-blue ↔ R-red
+  // for swing states based on their PROJECTED margin. Saturation scales
+  // with distance from zero so a razor-thin state reads pale and a
+  // solidly-shifted state reads saturated. Matches the tier vocabulary
+  // the piece uses everywhere.
+  function computeFill(r) {
     if (!r) return '#e5e7eb';                       // non-swing: neutral grey
     const pct = r.newPct;
     if (pct > 0) {
@@ -80,29 +105,30 @@
     const B = Math.round(202 - t * 174);
     return `rgb(${R}, ${G}, ${B})`;
   }
-  function strokeFor(fips) {
-    const r = fipsToResult.get(fips);
+  function computeStroke(r) {
     if (r?.flipped) return '#d97706';               // amber for flipped
     if (r) return '#fff';
     return '#d1d5db';
   }
-  function strokeWidthFor(fips) {
-    const r = fipsToResult.get(fips);
+  function computeStrokeWidth(r) {
     if (r?.flipped) return 2.2;
     if (r) return 0.85;
     return 0.5;
   }
 
   // ── Tooltip handlers ────────────────────────────────────────
+  // Store only the fips at hover time. The template looks up the
+  // current result on every render — so adjusting a slider while
+  // hovering keeps the tooltip's numbers in sync instead of showing
+  // the stale snapshot from hover-start.
   function showTooltip(event, fips) {
-    const r = fipsToResult.get(fips);
-    if (!r) return;
+    if (!fipsToResult.has(fips)) return;
     const rect = container.getBoundingClientRect();
     tooltip = {
       visible: true,
       x: event.clientX - rect.left + 12,
       y: event.clientY - rect.top + 12,
-      result: r,
+      fips,
     };
   }
   function hideTooltip() { tooltip = { ...tooltip, visible: false }; }
@@ -121,46 +147,45 @@
     preserveAspectRatio="xMidYMid meet"
   >
     {#if loaded}
-      {#each stateFeatures as feat (feat.id)}
-        {@const fips = String(feat.id).padStart(2, '0')}
-        {@const isSwing = fipsToResult.has(fips)}
+      {#each pathAttrs as attrs (attrs.id)}
         <path
-          d={pathByFips.get(fips)}
-          fill={fillFor(fips)}
-          stroke={strokeFor(fips)}
-          stroke-width={strokeWidthFor(fips)}
-          class:swing={isSwing}
-          on:mousemove={(e) => showTooltip(e, fips)}
+          d={attrs.d}
+          fill={attrs.fill}
+          stroke={attrs.stroke}
+          stroke-width={attrs.strokeWidth}
+          class:swing={attrs.isSwing}
+          on:mousemove={(e) => showTooltip(e, attrs.fips)}
           on:mouseleave={hideTooltip}
         />
       {/each}
     {/if}
   </svg>
 
-  {#if tooltip.visible && tooltip.result}
+  {#if tooltip.visible && fipsToResult.has(tooltip.fips)}
+    {@const tr = fipsToResult.get(tooltip.fips)}
     <div
       class="alloc-tt"
       style="left: {tooltip.x}px; top: {tooltip.y}px"
       aria-hidden="true"
     >
-      <div class="tt-name">{tooltip.result.name}</div>
+      <div class="tt-name">{tr.name}</div>
       <div class="tt-grid">
         <span class="tt-label mono">2020</span>
-        <span class="tt-val lean-{tooltip.result.origParty}">
-          {tooltip.result.origParty}&thinsp;+{Math.abs(tooltip.result.margin_pct).toFixed(2)}
+        <span class="tt-val lean-{tr.origParty}">
+          {tr.origParty}&thinsp;+{Math.abs(tr.margin_pct).toFixed(2)}
         </span>
         <span class="tt-label mono">Projected</span>
-        <span class="tt-val lean-{tooltip.result.newParty}">
-          {tooltip.result.newParty}&thinsp;+{Math.abs(tooltip.result.newPct).toFixed(2)}
+        <span class="tt-val lean-{tr.newParty}">
+          {tr.newParty}&thinsp;+{Math.abs(tr.newPct).toFixed(2)}
         </span>
         <span class="tt-label mono">Movers</span>
         <span class="tt-val mono">
-          {tooltip.result.movers.toLocaleString()}
+          {tr.movers.toLocaleString()}
         </span>
         <span class="tt-label mono">EV</span>
-        <span class="tt-val mono">{tooltip.result.ev}</span>
+        <span class="tt-val mono">{tr.ev}</span>
       </div>
-      {#if tooltip.result.flipped}
+      {#if tr.flipped}
         <div class="tt-flipped mono">Flipped ✓</div>
       {/if}
     </div>
