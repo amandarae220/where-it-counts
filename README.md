@@ -82,7 +82,7 @@ Most political dashboards visualize raw vote totals or margins. This piece intro
 [`src/lib/components/sections/MapMoves.svelte`](src/lib/components/sections/MapMoves.svelte) — two-level exploration tool with a symmetric direction toggle (D/R) and a live weight slider.
 
 - **Level 1** ranks the 9 states by a normalized combined score (presidential leverage + state-leg leverage) with `svelte/animate` FLIP transitions on rank changes and CSS `transition: width` on score bars — the sort order updates visibly as the reader drags the slider.
-- **Level 2** lazy-loads county-level surplus data on demand, filters to the selected state, and ranks the top 6 counties by leverage per mover. Hovering a card highlights that county on an inline [`StateMiniMap`](src/lib/components/viz/StateMiniMap.svelte) — shared component, per-state Mercator projection fit to a 320×220 viewBox.
+- **Level 2** lazy-loads county-level surplus data on demand, filters to the selected state, and ranks the top 6 counties by leverage per mover. Hovering a card highlights that county on an inline [`StateMiniMap`](src/lib/components/viz/StateMiniMap.svelte) — shared component, per-state Mercator projection fit to a 320×220 viewBox, with the state's outer boundary rendered on top of the county paths (via `topojson.objects.states` lookup, `pointer-events: none`) so the shape reads instantly.
 - **Vocabulary consistency** — every state and county carries a tier pill ("Razor thin" / "Competitive" / "Shifting") that uses the same palette and thresholds as MoversBudget and the (currently-disabled) Calculator, so a reader learning the vocabulary in one tool reads the others fluently.
 
 ### MoversBudget — Census-anchored what-if allocator
@@ -91,8 +91,11 @@ Most political dashboards visualize raw vote totals or margins. This piece intro
 
 - **Budget slider** expressed as a percentage of the 8M Americans who move between states each year (Census ACS 2022) — every value the reader picks is a fraction of a real baseline, not an aspirational number. Live anchors display *"1.6× Katrina's Houston displacement"* and *"9.3× the combined 2020 margin that decided GA + AZ + WI"* underneath the slider.
 - **9 allocation cards** with independent sliders, live per-state margin recomputation, tier reclassification, and a "Flipped" indicator that lights up when a card's projected result crosses the party line.
+- **Per-slider flip-target ticks** — each allocation slider carries a small tick at the exact allocation count that would flip that state, but only when the flip is achievable (direction opposes the state's current lean AND the flip point sits within the current budget). Tick is grey when unmet, amber when the reader crosses it. Gives the reader a live target instead of asking them to guess.
+- **AllocationMap national choropleth** — [`viz/AllocationMap.svelte`](src/lib/components/viz/AllocationMap.svelte) sits at the top of the impact panel. All 50 states render; the 9 battleground states color by their projected margin on a two-sided gradient (light blue → deep blue for D, light red → deep red for R). Any state that crossed the party line gets an amber outer stroke. Live hover tooltip with per-state 2020 vs. projected numbers, kept fresh via a fips-lookup pattern so dragging a slider while hovering never shows stale data.
 - **Impact panel** aggregates in real time: Electoral College totals with deltas from a 2020 baseline recomputed under post-2020 census apportionment (D 303 / R 235), count of states flipped with color-coded chips, and a movers-per-EC-vote-gained efficiency ratio.
 - **Sticky mobile summary bar** — under 900px, a compact bar shows live EC totals and flip count as the reader scrolls through the allocation cards. Solves the biggest mobile UX problem for this pattern (long scroll = losing context of what your allocations are producing).
+- **Cross-tool direction sync** — the D/R toggle is a shared Svelte store ([`stores/direction.js`](src/lib/stores/direction.js)), so flipping in MapMoves flips MoversBudget too. The reader's chosen framing follows them down the page.
 
 ### Calculator *(currently disabled — import commented out)*
 
@@ -102,13 +105,13 @@ Most political dashboards visualize raw vote totals or margins. This piece intro
 
 ## Case study — technical challenges worth calling out
 
-Three problems in this codebase that don't have obvious solutions and produced small design decisions worth naming for anyone reviewing the technical work.
+Problems in this codebase that don't have obvious solutions and produced small design decisions worth naming for anyone reviewing the technical work.
 
 ### 1. Normalizing two leverage axes so a weighting slider actually blends them
 
 MapMoves has a slider that weights presidential leverage vs. state-legislative leverage. First cut used raw closeness (`100 / sqrt(margin_pct)`) for presidential and raw competitive-district share (`comp_leg / total_leg × 500`) for state-leg. Result: presidential leverage capped at 100 for the razor-thin states, state-leg leverage topped out around 39 — meaning at 0% presidential weight the highest score was 39, at 100% it was 100. The slider felt one-sided and the bar visualization was inconsistent across positions.
 
-Fix: normalize both axes against the dataset's own maximum (`Math.max(...STATES.map(rawFn))`) so both scales hit 0–100. The slider now blends genuinely comparable numbers, and the bar widths make sense at any slider position. See [`MapMoves.svelte:79–95`](src/lib/components/sections/MapMoves.svelte).
+Fix: normalize both axes against the dataset's own maximum (`Math.max(...STATES.map(rawFn))`) so both scales hit 0–100. The slider now blends genuinely comparable numbers, and the bar widths make sense at any slider position. See the `combinedScore` derivation in [`MapMoves.svelte`](src/lib/components/sections/MapMoves.svelte).
 
 A related trap: the first version passed `combinedScore(s)` from inside a `$: ranked = ...` reactive block, reading `weightPres` from the outer scope. Svelte 4's compiler only tracks variables that appear literally in the reactive expression — it couldn't see `weightPres` inside the function body, so the ranking never updated when the slider moved. Fix: pass `weightPres` in as an argument.
 
@@ -144,11 +147,54 @@ Fix: a sticky `position: sticky; top: 0` bar that appears at viewports under 900
 
 Both MapMoves and MoversBudget include explicit `::webkit-slider-thumb` and `::-moz-range-thumb` rules that give predictable 22px thumbs everywhere, with a 12% scale-up on hover and a full pattern override under `@media (prefers-reduced-motion: reduce)`. Combined with 44px minimum-height toggle buttons and a `min-height: 36px` reset button on mobile, every interactive element meets WCAG 2.1 AA touch-target guidance.
 
-### 7. Shared data module — single source of truth for the 9 states
+### 7. Shared modules — one source of truth per concern
 
-MapMoves and MoversBudget both need the same 9 battleground states with the same margin data, EV counts, and legislative-district counts. Duplicating the array inline in each component invites drift: fix a typo in one, forget the other, ship inconsistent numbers.
+MapMoves and MoversBudget both need the same 9 battleground states, the same simulation math, and the same direction toggle. Duplicating any of that inline invites drift: fix a typo in one component, forget the other, ship inconsistent numbers or math.
 
-The fix is a single [`src/lib/data/swingStates.js`](src/lib/data/swingStates.js) module that exports `SWING_STATES`, `BASELINE_D_EV`, `BASELINE_R_EV`, and a `REFERENCES` object with every citation anchor (Census annual interstate movement, Katrina, Maria, 2020 combined swing margin, etc.), each with `value` + `label` + `source` fields. Both components import from it. If a fact changes, one file changes.
+Three sibling modules under `src/lib/` each own one concern:
+
+- [`data/swingStates.js`](src/lib/data/swingStates.js) — the **data**: `SWING_STATES` (margin, EV, comp-leg counts), `BASELINE_D_EV` / `BASELINE_R_EV` (2020 result under post-2020 apportionment), `SWING_STATE_FIPS` (Census codes for the state-level topojson joins), and a `REFERENCES` object with every citation anchor (annual interstate movement, Katrina, Maria, 2020 combined swing margin) — each with `value` + `label` + `source` fields.
+- [`data/simulation.js`](src/lib/data/simulation.js) — the **logic**: pure `simulate(state, direction, movers)` function, `stateTier(marginPct)` and `countyTier(marginPct)` classifiers. No framework dependencies, testable with plain assertions.
+- [`stores/direction.js`](src/lib/stores/direction.js) — the **UI state**: a Svelte `writable('D' | 'R')` shared across MapMoves and MoversBudget. Toggling in one tool updates the other in real time.
+
+The split matters. `swingStates.js` changes when a fact about the world changes (state EV reapportionment, new battleground added). `simulation.js` changes when the analytical model changes (tier thresholds move). `direction.js` changes when the UI state model changes. Different rates of change, correctly separated.
+
+### 8. A recurring Svelte reactivity trap — and the pattern for detecting it
+
+The bug fixed in challenge #1 (a reactive `$: ...` block whose dependency was hidden inside a function body) turned out to be a recurring pattern in this codebase. It bit AllocationMap too: the map's `fill={fillFor(fips)}` attribute stopped animating when a state flipped, because Svelte's compiler statically analyzes `fillFor(fips)` and sees only `fillFor` and `fips` as dependencies — not the `fipsToResult` map read *inside* the function body.
+
+Two lessons worth naming for a reviewer:
+
+1. **The fix pattern is identical every time.** Move the derived computation out of the attribute expression and into a `$:` block that literally references the mutating input:
+
+   ```js
+   // Bad — Svelte compiler can't see fipsToResult
+   <path fill={fillFor(fips)} />
+
+   // Good — fipsToResult appears literally in the reactive expression
+   $: pathAttrs = stateFeatures.map(feat => {
+     const r = fipsToResult.get(feat.id);   // <-- Svelte sees this
+     return { ...attrs, fill: computeFill(r) };
+   });
+   ```
+
+2. **A tooltip that captured `r` at hover time went stale for the same reason.** Fixed by storing only the fips code and looking up the current result on every render: `{@const tr = fipsToResult.get(tooltip.fips)}`. Now hovering + dragging keeps tooltip numbers fresh.
+
+Documenting the pattern here so that if a third instance appears, the fix is immediate rather than a discovery.
+
+### 9. Screenshotting a live interactive with puppeteer
+
+The three README screenshots are captured live from the running dev server by [`docs/screenshots/capture.mjs`](docs/screenshots/capture.mjs) — a small puppeteer-core script that scripts the interactive states (Georgia click → drill-in; slider adjustments → NC flipped) and shoots at 2× device pixel ratio.
+
+One non-obvious detail: setting a `bind:value`-bound Svelte slider from puppeteer's `page.evaluate` doesn't trigger Svelte reactivity if you do the obvious `el.value = 100000`. Svelte's `bind:value` compiles to an `input`-event listener. You have to fire that event, and set the value through the property descriptor's setter so the framework doesn't overwrite it:
+
+```js
+const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+setter.call(el, value);
+el.dispatchEvent(new Event('input', { bubbles: true }));
+```
+
+Documented in the capture script so the pattern is reusable for future screenshot regeneration.
 
 ---
 
@@ -242,21 +288,31 @@ src/
                                    # → MapMoves → MoversBudget → Closer
   lib/
     data/
-      swingStates.js               # Shared source of truth: 9 battleground states,
-                                   # baseline EC, and reference anchors (Census,
-                                   # Katrina, etc.) used by both interactive tools.
+      swingStates.js               # DATA — the 9 states, baseline EV, FIPS codes,
+                                   # and citation anchor references (Census, Katrina)
+      simulation.js                # LOGIC — pure simulate() + stateTier/countyTier;
+                                   # no framework deps; testable in isolation
+    stores/
+      direction.js                 # UI STATE — shared D/R writable across both tools
     components/
       Scrollytelling.svelte        # Generic sticky-viz + steps shell
       viz/
-        SurplusMapViz.svelte       # D3 choropleth, 5 modes, tooltip, annotations
-        StateMiniMap.svelte        # Per-state overview map for MapMoves drill-in
+        SurplusMapViz.svelte       # D3 national choropleth, 5 scroll modes, tooltip
+        StateMiniMap.svelte        # Per-state overview map with outer-boundary overlay
+        AllocationMap.svelte       # National choropleth for MoversBudget impact panel;
+                                   # live-recolors, amber flip outlines, hover tooltip
       sections/
         StatBreaker.svelte         # 216× / 146× hero stat module
-        MapMoves.svelte            # 9-state leverage tool, county drill-in
-        MoversBudget.svelte        # Census-anchored what-if allocator: distribute
-                                   # a slice of annual interstate movement across
-                                   # 9 states, watch the EC recompute live
+        MapMoves.svelte            # 9-state leverage tool, county drill-in, mini-map
+        MoversBudget.svelte        # Census-anchored allocator: distribute a slice of
+                                   # annual interstate movement, watch EC recompute
         Calculator.svelte          # (currently disabled) Metro ranker
+docs/
+  screenshots/
+    capture.mjs                    # Puppeteer-core capture script for README shots
+    01-hero.png                    # Portfolio screenshots (regenerable)
+    02-mapmoves.png
+    03-moversbudget.png
 data/                              # Source CSVs + processing scripts
 static/data/                       # Built TopoJSON + surplus lookup, served at runtime
 ```

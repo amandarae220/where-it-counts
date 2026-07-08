@@ -40,7 +40,7 @@
   <div class="scrolly-steps">
     {#each steps as step, i}
       <div class="scrolly-step step" data-step={i}>
-        <div class="step-content">
+        <div class="step-content" data-mode={step.mode}>
           {#if step.stat}
             <div class="stat">{step.stat}</div>
             {#if step.statLabel}

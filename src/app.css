@@ -127,6 +127,11 @@ strong { font-weight: 600; }
   margin-bottom: 0.5rem;
 }
 
+/* Per-step accent overrides. Rescope --color-accent inside the step
+   card so the border-left, stat number, and divider all pick up the
+   party-appropriate colour without touching individual rules. */
+.step-content[data-mode="surplus-red"] { --color-accent: var(--color-rep); }
+
 /* Mobile scrollytelling — overlay docks to bottom, map gets more room */
 @media (max-width: 720px) {
   .scrolly-sticky { height: 100svh; }

@@ -169,8 +169,16 @@
   function updateViz(currentMode) {
     if (!initialized || !gCounties) return;
 
+    // NAMED transitions matter here. d3 stops any existing unnamed
+    // transition on a selection when a new unnamed transition starts
+    // on the same selection. Without names, the stroke-width reset a
+    // few lines below would kill the fill+opacity transition on
+    // gCounties before the first tick — the map would freeze at
+    // intro colors regardless of the scroll mode. Naming them so
+    // 'fill' and 'stroke' operate independently.
     gCounties.selectAll('path')
-      .transition().duration(650).ease(d3.easeCubicOut)
+      .transition('fill')
+      .duration(650).ease(d3.easeCubicOut)
       .attr('fill',    d => styleFor(d.id, currentMode).fill)
       .attr('opacity', d => styleFor(d.id, currentMode).opacity);
 
@@ -178,10 +186,15 @@
       zoomToSwing();
     } else {
       // Reset zoom + borders
-      gZoom.transition().duration(800).ease(d3.easeCubicOut)
+      gZoom.transition('zoom')
+        .duration(800).ease(d3.easeCubicOut)
         .attr('transform', 'translate(0,0) scale(1)');
-      gBorders.transition().duration(800).attr('stroke-width', 0.75);
-      gCounties.selectAll('path').transition().duration(800).attr('stroke-width', 0.25);
+      gBorders.transition('stroke')
+        .duration(800)
+        .attr('stroke-width', 0.75);
+      gCounties.selectAll('path').transition('stroke')
+        .duration(800)
+        .attr('stroke-width', 0.25);
       d3.select(container).selectAll('.swing-label').remove();
     }
   }
@@ -195,12 +208,18 @@
     const tx = W / 2 - scale * cx;
     const ty = H / 2 - scale * cy;
 
-    gZoom.transition().duration(900).ease(d3.easeCubicInOut)
+    gZoom.transition('zoom')
+      .duration(900).ease(d3.easeCubicInOut)
       .attr('transform', `translate(${tx},${ty}) scale(${scale})`);
 
-    // Scale down borders/strokes so they stay visually thin
-    gBorders.transition().duration(900).attr('stroke-width', 0.75 / scale);
-    gCounties.selectAll('path').transition().duration(900).attr('stroke-width', 0.25 / scale);
+    // Scale down borders/strokes so they stay visually thin — 'stroke'
+    // named transition doesn't fight the 'fill' one from updateViz.
+    gBorders.transition('stroke')
+      .duration(900)
+      .attr('stroke-width', 0.75 / scale);
+    gCounties.selectAll('path').transition('stroke')
+      .duration(900)
+      .attr('stroke-width', 0.25 / scale);
 
     addSwingLabels(scale, tx, ty);
   }
