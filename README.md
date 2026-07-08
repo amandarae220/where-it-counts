@@ -6,6 +6,8 @@ It is not partisan. Both parties' surplus votes are shown. The piece is built on
 
 **Live:** https://where-it-counts.vercel.app
 
+> **Personal project.** All analysis, framing, and views expressed here are my own and do not represent any employer, client, or affiliated organization.
+
 ---
 
 ## What it looks like
