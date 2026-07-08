@@ -6,6 +6,8 @@ It is not partisan. Both parties' surplus votes are shown. The piece is built on
 
 **Live:** https://where-it-counts.vercel.app
 
+> **Personal project.** All analysis, framing, and views expressed here are my own and do not represent any employer, client, or affiliated organization.
+
 ---
 
 ## What it looks like
@@ -272,7 +274,17 @@ npm install
 npm run dev      # http://localhost:5173
 npm run build    # static output to /build
 npm run preview
+npm test         # vitest watch mode
+npm run test:ci  # single test run, CI-friendly
 ```
+
+### Test coverage
+
+The mathematical core of the interactive tools — `simulate(state, direction, movers)` and the tier classifiers — lives in [`src/lib/data/simulation.js`](src/lib/data/simulation.js), framework-free by design. It's covered by [`simulation.test.js`](src/lib/data/simulation.test.js): 16 tests across 3 describe blocks covering flip detection, cushion expansion, vote-to-pct ratio preservation, symmetric R/D handling, and tier threshold boundaries. Run `npm run test:ci` — passes in ~120ms.
+
+### A note on `CLAUDE.md`
+
+`CLAUDE.md` at repo root is a live tool configuration file — Claude Code loads it as project context for any AI-assisted development on this codebase. It's committed intentionally as part of the case study's transparency about tooling. The piece was designed, written, and coded by a single author; parts of the implementation were AI-assisted. That workflow is documented in the file itself. It has no runtime impact on the site.
 
 ---
 

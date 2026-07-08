@@ -253,7 +253,12 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="prose">
-      <p class="mono text-muted" style="font-size:0.8125rem;">
+      <p class="mono text-muted footer-disclaimer">
+        Personal project. All analysis, framing, and views expressed here
+        are my own and do not represent any employer, client, or
+        affiliated organization.
+      </p>
+      <p class="mono text-muted footer-sources">
         All data public and free. Sources: MIT Election Lab · U.S. Census ACS ·
         Bureau of Labor Statistics · Zillow Research · OpenElections · Ballotpedia ·
         Bureau of Economic Analysis.
@@ -569,5 +574,20 @@
     padding: 3rem 0;
     background: var(--color-bg-dark);
     border-top: 1px solid #1f2937;
+  }
+  .footer-disclaimer,
+  .footer-sources {
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .footer-disclaimer {
+    color: #9ca3af;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #1f2937;
+  }
+  .footer-sources {
+    color: var(--color-text-muted);
   }
 </style>

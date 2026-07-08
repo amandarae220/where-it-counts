@@ -20,3 +20,9 @@ data/census_wfh_state.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Editorial working documents — kept local, not shipped in the repo.
+# These are pre-implementation drafts (concept-brief) and internal
+# copy-review artifacts (content) that don't reflect the shipped piece.
+concept-brief.md
+content.md
