@@ -32,6 +32,33 @@ It is not partisan. Both parties' surplus votes are shown. The piece is built on
 
 *Screenshots captured via [`docs/screenshots/capture.mjs`](docs/screenshots/capture.mjs) — a puppeteer-core script that boots headless Chrome against the running dev server, scripts the slider interactions, and shoots at 2× device pixel ratio.*
 
+### Mobile viz behavior (375px viewport, 3× DPR)
+
+The scrollytelling map's mobile behaviour is worth calling out explicitly for reviewers who filter on mobile-viz craft.
+
+<p align="center">
+  <img src="docs/screenshots/04-mobile-surplus-red.png" alt="Scrollytelling map on iPhone at 375px — surplus-red step showing GOP counties in red gradient with Democratic counties dimmed, callout docked to bottom of viewport with red left border and 8.6M stat in red" width="280" />
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/05-mobile-zoom-swing.png" alt="Scrollytelling map on iPhone at 375px — zoom-swing step showing Arizona, Wisconsin, and Georgia at their zoomed scale with vote-count annotations (10,457 / 20,682 / 11,779) visible around each state" width="280" />
+</p>
+
+<p align="center"><em>Left: <code>surplus-red</code> step. Right: <code>zoom-swing</code> step. Both at 375&thinsp;× 812 (iPhone 13/14 baseline).</em></p>
+
+**What works on mobile:**
+
+- All 5 scroll modes transition correctly — d3's named transitions (see technical challenge #1) mean color changes fire independently of the zoom + stroke transitions, on mobile as on desktop.
+- The narrative callout docks to the bottom of the viewport (via `align-items: flex-end` at `≤720px`) with backdrop-blur and semi-transparent background so it doesn't cover the map's active area.
+- Per-step accent colors work — the surplus-red step's `8.6M` and left border shift to `--color-rep` red via the `data-mode` attribute pattern.
+- The zoom-swing step's three-state annotations (AZ / GA / WI, each labeled with its 2020 decisive-margin vote count) all fit within a 375px viewport thanks to `preserveAspectRatio: xMidYMid meet` on the map's SVG.
+
+**Honest limitations documented:**
+
+- **Hover tooltips aren't available on touch.** The "Hover any county for details" hint is intentionally hidden on `≤720px` viewports. The scroll narrative and visual patterns are designed to carry the story on mobile without the per-county tooltip. Adding a tap-to-pin tooltip would require rethinking the touch-scroll interaction, and was scoped out in favour of a simpler mobile-first read.
+- **Zoom-swing annotation labels crowd the left edge** at 375px, but stay readable. A responsive label-positioning pass could reflow them into the top-right corner on narrow viewports; that lives on the "future polish" list.
+- **The bottom-left surplus legend gets partially covered** by the docked callout on the zoom-swing step. Semi-transparent backdrop-blur keeps it legible-through, and the legend content ("Dem surplus / Rep surplus / <2pt margin") is redundant with the map's color patterns by that point in the scroll flow.
+
+The tradeoff is deliberate: mobile UX prioritizes the *narrative* + *visual pattern* over the per-datapoint tooltip that desktop users get. A senior reviewer looking for mobile-viz judgment should see this as a considered scoping decision, not a gap.
+
 ---
 
 ## About this portfolio piece

@@ -99,6 +99,37 @@ try {
     await page.close();
     console.log('03-moversbudget.png');
   }
+
+  // ── Mobile viewport captures — iPhone 13/14 baseline width (375 CSS
+  //    px, 3× DPR). Documents the scrollytelling map's mobile behaviour
+  //    for portfolio reviewers who filter on mobile viz work. ────────
+  const MOBILE = { width: 375, height: 812, deviceScaleFactor: 3 };
+
+  async function shootScrollyStep(index, name) {
+    const page = await browser.newPage();
+    await page.setViewport(MOBILE);
+    await page.goto(URL, { waitUntil: 'networkidle0', timeout: 30000 });
+    await new Promise(r => setTimeout(r, 1500));
+    const target = await page.evaluate((i) => {
+      const s = document.querySelectorAll('.scrolly-step')[i];
+      const r = s.getBoundingClientRect();
+      return { top: r.top + window.scrollY, height: r.height };
+    }, index);
+    await page.evaluate(
+      (y) => window.scrollTo(0, y),
+      target.top + target.height / 2 - MOBILE.height * 0.5
+    );
+    await new Promise(r => setTimeout(r, 1600));  // scrollama debounce + d3 transition
+    await page.screenshot({ path: `${OUT}/${name}.png` });
+    await page.close();
+    console.log(`${name}.png`);
+  }
+
+  // 04. surplus-red at 375 — red emphasis mode, docked callout, no hover hint
+  await shootScrollyStep(2, '04-mobile-surplus-red');
+
+  // 05. zoom-swing at 375 — AZ + GA + WI with annotated margins fit the width
+  await shootScrollyStep(4, '05-mobile-zoom-swing');
 } finally {
   await browser.close();
 }
