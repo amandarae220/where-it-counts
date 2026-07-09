@@ -259,8 +259,9 @@
                       on:mouseleave={() => hoveredFips = null}
                       on:focusin={() => hoveredFips = c.fips}
                       on:focusout={() => hoveredFips = null}
-                      role="group"
+                      role="button"
                       tabindex="0"
+                      aria-label={`Highlight ${c.county} on state map`}
                     >
                       <div class="county-head">
                         <span class="county-name">{c.county}</span>

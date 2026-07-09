@@ -12,7 +12,7 @@
 import puppeteer from 'puppeteer-core';
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
-const URL = process.env.SITE_URL ?? 'http://localhost:5199/';
+const SITE_URL = process.env.SITE_URL ?? 'http://localhost:5199/';
 const OUT = new URL('.', import.meta.url).pathname;
 
 const browser = await puppeteer.launch({
@@ -37,7 +37,7 @@ try {
   {
     const page = await browser.newPage();
     await page.setViewport({ width: 1440, height: 900, deviceScaleFactor: 2 });
-    await page.goto(URL, { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto(SITE_URL, { waitUntil: 'networkidle0', timeout: 30000 });
     await page.screenshot({ path: `${OUT}/01-hero.png` });
     await page.close();
     console.log('01-hero.png');
@@ -47,7 +47,7 @@ try {
   {
     const page = await browser.newPage();
     await page.setViewport({ width: 1440, height: 1500, deviceScaleFactor: 2 });
-    await page.goto(URL, { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto(SITE_URL, { waitUntil: 'networkidle0', timeout: 30000 });
     await page.evaluate(() => {
       document.getElementById('map-moves-h')?.scrollIntoView({ behavior: 'instant', block: 'start' });
       window.scrollBy(0, -60);
@@ -75,7 +75,7 @@ try {
   {
     const page = await browser.newPage();
     await page.setViewport({ width: 1440, height: 1400, deviceScaleFactor: 2 });
-    await page.goto(URL, { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto(SITE_URL, { waitUntil: 'networkidle0', timeout: 30000 });
     await page.evaluate(() => {
       document.getElementById('mb-title')?.scrollIntoView({ behavior: 'instant', block: 'start' });
       window.scrollBy(0, -60);
@@ -108,7 +108,7 @@ try {
   async function shootScrollyStep(index, name) {
     const page = await browser.newPage();
     await page.setViewport(MOBILE);
-    await page.goto(URL, { waitUntil: 'networkidle0', timeout: 30000 });
+    await page.goto(SITE_URL, { waitUntil: 'networkidle0', timeout: 30000 });
     await new Promise(r => setTimeout(r, 1500));
     const target = await page.evaluate((i) => {
       const s = document.querySelectorAll('.scrolly-step')[i];

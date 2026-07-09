@@ -267,12 +267,23 @@ Earlier drafts of this piece ran two theses in parallel: (a) *your vote's ROI* (
 
 ## Tech stack
 
-- **Framework:** SvelteKit + Vite, static-adapter prerender
+- **Framework:** SvelteKit 2 + **Svelte 5** + **Vite 8**, static-adapter prerender
 - **Visualization:** D3 v7, scrollama, topojson-client
+- **Testing:** Vitest 4 (16 unit tests against `simulation.js`)
 - **Hosting:** Vercel (clean URLs, no server runtime)
 - **Fonts:** Playfair Display (serif), Inter (sans), JetBrains Mono (numerals)
 
 All design tokens are global in [`src/app.css`](src/app.css). No component-level token overrides.
+
+### Svelte 5 + Vite 8 migration
+
+Upgraded from Svelte 4 + Vite 5 (three majors behind on Vite, one behind on Svelte) to Svelte 5 + Vite 8. Notes on how it went, since the migration itself is a portfolio-worthy signal:
+
+- **Legacy compatibility mode held up.** Every `.svelte` file continues to use `$:` reactive statements, `export let` props, and `on:event` handlers — Svelte 5's legacy mode compiles them cleanly with zero code changes required for functional correctness. The runes rewrite is optional, not required.
+- **A11y warnings surfaced by the new compiler were addressed.** Svelte 5 has stricter a11y linting than Svelte 4. Two paths needed changes: the `MapMoves` county cards were `role="group"` with `tabindex="0"` (semantically wrong for an interactive card), fixed by switching to `role="button"` with a matching `aria-label`. The `AllocationMap` interactive state paths were split into swing-state (`role="button"`, focus-tooltip handlers, per-state `aria-label` announcing 2020 vs. projected margins) and non-swing (`aria-hidden="true"`) variants.
+- **Vite 8 required no config changes.** The project's `vite.config.js` is minimal (`plugins: [sveltekit()]`); nothing referenced the `optimizeDeps.esbuildOptions` API that changed in Vite 6.
+- **Regression testing was live.** All 16 vitest cases pass unchanged. All 5 puppeteer-captured screenshots regenerate identically against the upgraded stack. Choropleth reactivity (Fix #8's function-hidden dependency trap) still animates correctly.
+- **Path forward.** Runes (`$state`, `$derived`, `$effect`, `$props`) are on the table for a future pass. Their upside — making the fine-grained dependency tracking explicit and eliminating the reactive-block bugs by construction — is real, but not urgent while legacy mode holds.
 
 ---
 
