@@ -32,6 +32,33 @@ It is not partisan. Both parties' surplus votes are shown. The piece is built on
 
 *Screenshots captured via [`docs/screenshots/capture.mjs`](docs/screenshots/capture.mjs) — a puppeteer-core script that boots headless Chrome against the running dev server, scripts the slider interactions, and shoots at 2× device pixel ratio.*
 
+### Mobile viz behavior (375px viewport, 3× DPR)
+
+The scrollytelling map's mobile behaviour is worth calling out explicitly for reviewers who filter on mobile-viz craft.
+
+<p align="center">
+  <img src="docs/screenshots/04-mobile-surplus-red.png" alt="Scrollytelling map on iPhone at 375px — surplus-red step showing GOP counties in red gradient with Democratic counties dimmed, callout docked to bottom of viewport with red left border and 8.6M stat in red" width="280" />
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/05-mobile-zoom-swing.png" alt="Scrollytelling map on iPhone at 375px — zoom-swing step showing Arizona, Wisconsin, and Georgia at their zoomed scale with vote-count annotations (10,457 / 20,682 / 11,779) visible around each state" width="280" />
+</p>
+
+<p align="center"><em>Left: <code>surplus-red</code> step. Right: <code>zoom-swing</code> step. Both at 375&thinsp;× 812 (iPhone 13/14 baseline).</em></p>
+
+**What works on mobile:**
+
+- All 5 scroll modes transition correctly — d3's named transitions (see technical challenge #1) mean color changes fire independently of the zoom + stroke transitions, on mobile as on desktop.
+- The narrative callout docks to the bottom of the viewport (via `align-items: flex-end` at `≤720px`) with backdrop-blur and semi-transparent background so it doesn't cover the map's active area.
+- Per-step accent colors work — the surplus-red step's `8.6M` and left border shift to `--color-rep` red via the `data-mode` attribute pattern.
+- The zoom-swing step's three-state annotations (AZ / GA / WI, each labeled with its 2020 decisive-margin vote count) all fit within a 375px viewport thanks to `preserveAspectRatio: xMidYMid meet` on the map's SVG.
+
+**Honest limitations documented:**
+
+- **Hover tooltips aren't available on touch.** The "Hover any county for details" hint is intentionally hidden on `≤720px` viewports. The scroll narrative and visual patterns are designed to carry the story on mobile without the per-county tooltip. Adding a tap-to-pin tooltip would require rethinking the touch-scroll interaction, and was scoped out in favour of a simpler mobile-first read.
+- **Zoom-swing annotation labels crowd the left edge** at 375px, but stay readable. A responsive label-positioning pass could reflow them into the top-right corner on narrow viewports; that lives on the "future polish" list.
+- **The bottom-left surplus legend gets partially covered** by the docked callout on the zoom-swing step. Semi-transparent backdrop-blur keeps it legible-through, and the legend content ("Dem surplus / Rep surplus / <2pt margin") is redundant with the map's color patterns by that point in the scroll flow.
+
+The tradeoff is deliberate: mobile UX prioritizes the *narrative* + *visual pattern* over the per-datapoint tooltip that desktop users get. A senior reviewer looking for mobile-viz judgment should see this as a considered scoping decision, not a gap.
+
 ---
 
 ## About this portfolio piece
@@ -240,12 +267,23 @@ Earlier drafts of this piece ran two theses in parallel: (a) *your vote's ROI* (
 
 ## Tech stack
 
-- **Framework:** SvelteKit + Vite, static-adapter prerender
+- **Framework:** SvelteKit 2 + **Svelte 5** + **Vite 8**, static-adapter prerender
 - **Visualization:** D3 v7, scrollama, topojson-client
+- **Testing:** Vitest 4 (16 unit tests against `simulation.js`)
 - **Hosting:** Vercel (clean URLs, no server runtime)
 - **Fonts:** Playfair Display (serif), Inter (sans), JetBrains Mono (numerals)
 
 All design tokens are global in [`src/app.css`](src/app.css). No component-level token overrides.
+
+### Svelte 5 + Vite 8 migration
+
+Upgraded from Svelte 4 + Vite 5 (three majors behind on Vite, one behind on Svelte) to Svelte 5 + Vite 8. Notes on how it went, since the migration itself is a portfolio-worthy signal:
+
+- **Legacy compatibility mode held up.** Every `.svelte` file continues to use `$:` reactive statements, `export let` props, and `on:event` handlers — Svelte 5's legacy mode compiles them cleanly with zero code changes required for functional correctness. The runes rewrite is optional, not required.
+- **A11y warnings surfaced by the new compiler were addressed.** Svelte 5 has stricter a11y linting than Svelte 4. Two paths needed changes: the `MapMoves` county cards were `role="group"` with `tabindex="0"` (semantically wrong for an interactive card), fixed by switching to `role="button"` with a matching `aria-label`. The `AllocationMap` interactive state paths were split into swing-state (`role="button"`, focus-tooltip handlers, per-state `aria-label` announcing 2020 vs. projected margins) and non-swing (`aria-hidden="true"`) variants.
+- **Vite 8 required no config changes.** The project's `vite.config.js` is minimal (`plugins: [sveltekit()]`); nothing referenced the `optimizeDeps.esbuildOptions` API that changed in Vite 6.
+- **Regression testing was live.** All 16 vitest cases pass unchanged. All 5 puppeteer-captured screenshots regenerate identically against the upgraded stack. Choropleth reactivity (Fix #8's function-hidden dependency trap) still animates correctly.
+- **Path forward.** Runes (`$state`, `$derived`, `$effect`, `$props`) are on the table for a future pass. Their upside — making the fine-grained dependency tracking explicit and eliminating the reactive-block bugs by construction — is real, but not urgent while legacy mode holds.
 
 ---
 

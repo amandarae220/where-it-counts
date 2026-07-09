@@ -53,6 +53,7 @@
       fips,
       d: pathByFips.get(fips),
       isSwing: !!r,
+      result: r,
       fill: computeFill(r),
       stroke: computeStroke(r),
       strokeWidth: computeStrokeWidth(r),
@@ -148,15 +149,32 @@
   >
     {#if loaded}
       {#each pathAttrs as attrs (attrs.id)}
-        <path
-          d={attrs.d}
-          fill={attrs.fill}
-          stroke={attrs.stroke}
-          stroke-width={attrs.strokeWidth}
-          class:swing={attrs.isSwing}
-          on:mousemove={(e) => showTooltip(e, attrs.fips)}
-          on:mouseleave={hideTooltip}
-        />
+        {@const r = attrs.result}
+        {#if attrs.isSwing}
+          <!-- svelte-ignore a11y_no_static_element_interactions -->
+          <path
+            d={attrs.d}
+            fill={attrs.fill}
+            stroke={attrs.stroke}
+            stroke-width={attrs.strokeWidth}
+            class="swing"
+            role="button"
+            tabindex="0"
+            aria-label={`${r.name}: 2020 ${r.origParty}+${Math.abs(r.margin_pct).toFixed(2)}, projected ${r.newParty}+${Math.abs(r.newPct).toFixed(2)}${r.flipped ? ' (flipped)' : ''}`}
+            on:mousemove={(e) => showTooltip(e, attrs.fips)}
+            on:mouseleave={hideTooltip}
+            on:focus={(e) => showTooltip(e, attrs.fips)}
+            on:blur={hideTooltip}
+          />
+        {:else}
+          <path
+            d={attrs.d}
+            fill={attrs.fill}
+            stroke={attrs.stroke}
+            stroke-width={attrs.strokeWidth}
+            aria-hidden="true"
+          />
+        {/if}
       {/each}
     {/if}
   </svg>
